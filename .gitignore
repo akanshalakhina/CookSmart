@@ -1,0 +1,9 @@
+# Logs & storage
+cooksmart-website/storage/*.log
+*.log
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

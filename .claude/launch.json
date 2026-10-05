@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "cooksmart",
+      "runtimeExecutable": "C:\\Users\\Akansha\\AppData\\Local\\Microsoft\\WinGet\\Packages\\PHP.PHP.8.3_Microsoft.Winget.Source_8wekyb3d8bbwe\\php.exe",
+      "runtimeArgs": [
+        "-d", "extension_dir=C:\\Users\\Akansha\\AppData\\Local\\Microsoft\\WinGet\\Packages\\PHP.PHP.8.3_Microsoft.Winget.Source_8wekyb3d8bbwe\\ext",
+        "-d", "extension=mbstring",
+        "-d", "display_errors=1",
+        "-d", "error_reporting=E_ALL",
+        "-S", "localhost:8000",
+        "-t", "cooksmart-website",
+        "cooksmart-website/router.php"
+      ],
+      "port": 8000
+    }
+  ]
+}
