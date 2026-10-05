@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 600" role="img" aria-label="A plate of red chilli, turmeric, cumin and coriander powder">
+  <defs>
+    <radialGradient id="plate" cx="50%" cy="48%" r="50%">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset=".78" stop-color="#FBF6EF"/>
+      <stop offset=".835" stop-color="#ECE2D5"/>
+      <stop offset=".86" stop-color="#FFFFFF"/>
+      <stop offset=".965" stop-color="#F3EBE1"/>
+      <stop offset="1" stop-color="#D8CAB8"/>
+    </radialGradient>
+    <radialGradient id="bowl" cx="48%" cy="46%" r="52%">
+      <stop offset=".74" stop-color="#FFFFFF"/>
+      <stop offset=".88" stop-color="#F1ECE5"/>
+      <stop offset="1" stop-color="#D6CBBE"/>
+    </radialGradient>
+    <radialGradient id="p-chilli" cx="40%" cy="38%" r="65%">
+      <stop offset="0" stop-color="#F2533A"/><stop offset=".55" stop-color="#CC1A1C"/><stop offset="1" stop-color="#8A0A0D"/>
+    </radialGradient>
+    <radialGradient id="p-haldi" cx="40%" cy="38%" r="65%">
+      <stop offset="0" stop-color="#FFD94A"/><stop offset=".55" stop-color="#F2AA00"/><stop offset="1" stop-color="#BF7400"/>
+    </radialGradient>
+    <radialGradient id="p-jeera" cx="40%" cy="38%" r="65%">
+      <stop offset="0" stop-color="#D3A562"/><stop offset=".55" stop-color="#A06D2C"/><stop offset="1" stop-color="#694315"/>
+    </radialGradient>
+    <radialGradient id="p-dhania" cx="40%" cy="38%" r="65%">
+      <stop offset="0" stop-color="#CFC074"/><stop offset=".55" stop-color="#A08E3F"/><stop offset="1" stop-color="#6A5D24"/>
+    </radialGradient>
+    <filter id="grain-dark" x="0" y="0" width="1" height="1">
+      <feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="2" seed="4" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.6 1.55" result="d"/>
+      <feComposite in="d" in2="SourceAlpha" operator="in"/>
+    </filter>
+    <filter id="grain-light" x="0" y="0" width="1" height="1">
+      <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="11" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 3 -1.62" result="d"/>
+      <feComposite in="d" in2="SourceAlpha" operator="in"/>
+    </filter>
+    <filter id="plate-shadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#3A1405" flood-opacity=".32"/>
+    </filter>
+    <filter id="bowl-shadow" x="-20%" y="-20%" width="140%" height="145%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#2A1206" flood-opacity=".25"/>
+    </filter>
+    <filter id="garnish-shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="2.5" stdDeviation="2.2" flood-color="#2A1206" flood-opacity=".35"/>
+    </filter>
+
+    <g id="chilli">
+      <path d="M0 0 C 22 -15 72 -17 110 1 C 115 3 114 9 108 9 C 72 6 32 13 4 15 C -5 13 -6 4 0 0 Z" fill="#B0101A"/>
+      <path d="M12 1 C 38 -9 72 -10 100 0" stroke="#E5474D" stroke-width="3.2" fill="none" stroke-linecap="round" opacity=".65"/>
+      <path d="M30 9 C 55 5 80 4 104 5" stroke="#7A0A10" stroke-width="2" fill="none" stroke-linecap="round" opacity=".5"/>
+      <path d="M-1 1 C -11 -3 -13 12 -2 13 Z" fill="#3F5C1F"/>
+      <path d="M-8 6 C -18 4 -24 -4 -29 -11" stroke="#5E7D2B" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+    </g>
+    <g id="turmeric">
+      <path d="M0 0 C 12 -9 42 -11 64 -4 C 73 -1 73 10 64 12 C 42 16 12 13 0 8 C -7 6 -7 2 0 0 Z" fill="#C88A30"/>
+      <path d="M30 -8 C 32 -18 40 -24 48 -22 C 54 -20 52 -12 44 -8 Z" fill="#B97A25"/>
+      <path d="M14 -6 v14 M28 -8 v18 M42 -7 v18 M55 -5 v15" stroke="#91591B" stroke-width="1.4" stroke-linecap="round" opacity=".7"/>
+      <path d="M6 -1 C 20 -6 40 -7 60 -2" stroke="#E2AE5A" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".6"/>
+    </g>
+    <g id="leaf">
+      <path d="M0 0 C -11 -8 -15 -22 -5 -29 C -1 -36 10 -34 12 -26 C 21 -27 25 -16 19 -9 C 24 -3 17 6 8 4 C 6 8 2 6 0 0 Z" fill="#3E9B3A"/>
+      <path d="M0 0 C 2 -8 4 -14 5 -22 M3 -10 L 13 -14 M2 -6 L -6 -14" stroke="#2A7428" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+    </g>
+    <g id="cumin">
+      <ellipse rx="5.2" ry="1.9" fill="#87602E"/>
+      <path d="M-4 0 H4" stroke="#5E3F17" stroke-width=".7"/>
+    </g>
+    <g id="coriander-seed">
+      <circle r="4.2" fill="#C9A95B"/>
+      <circle r="4.2" fill="none" stroke="#97793A" stroke-width=".9"/>
+      <path d="M-3 -.5 C -1 1 1 1 3 -.5" stroke="#97793A" stroke-width=".7" fill="none"/>
+    </g>
+  </defs>
+
+  <!-- plate -->
+  <circle cx="300" cy="300" r="290" fill="url(#plate)" filter="url(#plate-shadow)"/>
+  <circle cx="300" cy="300" r="246" fill="none" stroke="#E7DCCD" stroke-width="2"/>
+
+  <!-- bowls -->
+  <g filter="url(#bowl-shadow)">
+    <circle cx="196" cy="196" r="92" fill="url(#bowl)"/>
+    <circle cx="404" cy="196" r="92" fill="url(#bowl)"/>
+    <circle cx="196" cy="404" r="92" fill="url(#bowl)"/>
+    <circle cx="404" cy="404" r="92" fill="url(#bowl)"/>
+  </g>
+
+  <circle cx="196" cy="196" r="74" fill="url(#p-chilli)"/>
+  <circle cx="404" cy="196" r="74" fill="url(#p-haldi)"/>
+  <circle cx="196" cy="404" r="74" fill="url(#p-dhania)"/>
+  <circle cx="404" cy="404" r="74" fill="url(#p-jeera)"/>
+
+  <g opacity=".42">
+    <circle cx="196" cy="196" r="74" filter="url(#grain-dark)"/>
+    <circle cx="404" cy="196" r="74" filter="url(#grain-dark)"/>
+    <circle cx="196" cy="404" r="74" filter="url(#grain-dark)"/>
+    <circle cx="404" cy="404" r="74" filter="url(#grain-dark)"/>
+  </g>
+  <g opacity=".35">
+    <circle cx="196" cy="196" r="74" fill="#fff" filter="url(#grain-light)"/>
+    <circle cx="404" cy="196" r="74" fill="#fff" filter="url(#grain-light)"/>
+    <circle cx="196" cy="404" r="74" fill="#fff" filter="url(#grain-light)"/>
+    <circle cx="404" cy="404" r="74" fill="#fff" filter="url(#grain-light)"/>
+  </g>
+  <!-- powder mounds -->
+  <g fill="#fff" opacity=".13">
+    <ellipse cx="184" cy="182" rx="36" ry="30"/>
+    <ellipse cx="392" cy="182" rx="36" ry="30"/>
+    <ellipse cx="184" cy="390" rx="36" ry="30"/>
+    <ellipse cx="392" cy="390" rx="36" ry="30"/>
+  </g>
+  <g fill="#fff" opacity=".1">
+    <ellipse cx="178" cy="176" rx="16" ry="13"/>
+    <ellipse cx="386" cy="176" rx="16" ry="13"/>
+    <ellipse cx="178" cy="384" rx="16" ry="13"/>
+    <ellipse cx="386" cy="384" rx="16" ry="13"/>
+  </g>
+
+  <!-- garnish -->
+  <g filter="url(#garnish-shadow)">
+    <use xlink:href="#chilli" href="#chilli" transform="translate(250 78) rotate(4) scale(.92)"/>
+    <use xlink:href="#chilli" href="#chilli" transform="translate(350 524) rotate(184) scale(.92)"/>
+    <use xlink:href="#turmeric" href="#turmeric" transform="translate(524 262) rotate(94) scale(1.05)"/>
+    <use xlink:href="#turmeric" href="#turmeric" transform="translate(76 338) rotate(-86) scale(1.05)"/>
+
+    <use xlink:href="#leaf" href="#leaf" transform="translate(300 300) rotate(0) scale(1.1)"/>
+    <use xlink:href="#leaf" href="#leaf" transform="translate(300 300) rotate(120) scale(1.1)"/>
+    <use xlink:href="#leaf" href="#leaf" transform="translate(300 300) rotate(240) scale(1.1)"/>
+    <use xlink:href="#leaf" href="#leaf" transform="translate(236 104) rotate(-40) scale(.8)"/>
+    <use xlink:href="#leaf" href="#leaf" transform="translate(372 500) rotate(140) scale(.8)"/>
+  </g>
+  <circle cx="300" cy="300" r="6" fill="#2E7A2A"/>
+
+  <g>
+    <use href="#cumin" transform="translate(512 330) rotate(20)"/>
+    <use href="#cumin" transform="translate(520 344) rotate(-35)"/>
+    <use href="#cumin" transform="translate(498 352) rotate(70)"/>
+    <use href="#cumin" transform="translate(530 318) rotate(5)"/>
+    <use href="#cumin" transform="translate(506 368) rotate(-10)"/>
+    <use href="#cumin" transform="translate(92 270) rotate(30)"/>
+    <use href="#cumin" transform="translate(80 256) rotate(-50)"/>
+    <use href="#cumin" transform="translate(102 250) rotate(80)"/>
+    <use href="#coriander-seed" transform="translate(88 232)"/>
+    <use href="#coriander-seed" transform="translate(74 244)"/>
+    <use href="#coriander-seed" transform="translate(104 226)"/>
+    <use href="#coriander-seed" transform="translate(508 380)"/>
+    <use href="#coriander-seed" transform="translate(524 370)"/>
+    <use href="#coriander-seed" transform="translate(494 388)"/>
+    <use href="#coriander-seed" transform="translate(290 72)"/>
+    <use href="#coriander-seed" transform="translate(372 84)"/>
+    <use href="#coriander-seed" transform="translate(228 528)"/>
+    <use href="#cumin" transform="translate(212 520) rotate(25)"/>
+    <use href="#cumin" transform="translate(386 76) rotate(-30)"/>
+    <use href="#cumin" transform="translate(394 92) rotate(60)"/>
+  </g>
+</svg>
