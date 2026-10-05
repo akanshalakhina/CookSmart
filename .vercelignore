@@ -1,0 +1,7 @@
+# Vercel only needs the static design preview (cooksmart-website/dist) and vercel.json.
+# Ignore everything else: PHP source, original photos, references.
+/*
+!/vercel.json
+!/cooksmart-website
+/cooksmart-website/*
+!/cooksmart-website/dist

@@ -90,10 +90,11 @@
     });
   });
 
-  function showAlert(message) {
+  function showAlert(message, tone) {
     if (!alertBox) return;
     alertBox.textContent = message || '';
     alertBox.hidden = !message;
+    alertBox.classList.toggle('form-alert--info', tone === 'info');
   }
 
   function burst(origin) {
@@ -121,6 +122,11 @@
     if (!ok) {
       var firstBad = form.querySelector('.has-error input, .has-error textarea');
       firstBad && firstBad.focus();
+      return;
+    }
+    // Static design preview (e.g. on Vercel): nothing to send to.
+    if (form.hasAttribute('data-preview')) {
+      showAlert('This is a design preview — the enquiry form will be active on the live website.', 'info');
       return;
     }
     submit.disabled = true;
