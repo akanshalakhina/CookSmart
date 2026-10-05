@@ -9,8 +9,9 @@ ErrorDocument 404 /404.php
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Block private folders
-    RewriteRule ^(includes|data|storage)(/|$) - [F,L]
+    # Block private folders (dist/ is only the Vercel design preview)
+    RewriteRule ^(includes|data|storage|dist)(/|$) - [F,L]
+    RewriteRule ^build-static\.php$ - [F,L]
 
     # Redirect old-style .php URLs to clean URLs (SEO)
     RewriteCond %{THE_REQUEST} \s/+(about-us|products|company-policy|contact-us)\.php[\s?] [NC]

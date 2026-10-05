@@ -1,5 +1,3 @@
+# Design preview — not the live CookSmart website.
 User-agent: *
 Allow: /
-
-# Update the domain once the site is live:
-# Sitemap: https://www.your-domain.com/sitemap.xml

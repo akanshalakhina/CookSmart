@@ -53,6 +53,24 @@ On localhost the enquiry form **writes to `storage/enquiries.log` instead of sen
 3. Check that PHP 8.1+ is selected and `mod_rewrite` is on (it is by default on almost all hosts).
 4. Send a test enquiry. If email does not arrive, the host's PHP `mail()` is blocked; in that case use SMTP (e.g. PHPMailer) or move to WordPress with a form plugin.
 
+## 5b. Design preview on Vercel (no PHP needed)
+
+Vercel can't run this PHP site, but it can host a static HTML copy so you can show the design.
+
+The repo is connected to Vercel through GitHub: the root `vercel.json` tells Vercel to serve `cooksmart-website/dist/`, which holds plain HTML.
+
+1. After any design change, rebuild `dist/` from this folder (no need to start a server first):
+
+   ```bash
+   php build-static.php
+   ```
+
+2. Commit and push. Vercel redeploys automatically from GitHub.
+3. *Optional:* so WhatsApp/social link previews show the CookSmart image, build with your Vercel URL:
+   `php build-static.php https://your-project.vercel.app`
+
+In the preview the enquiry form shows a "design preview" notice instead of sending, and every page is marked *noindex* so Google ignores it. `dist/` and `build-static.php` are blocked on Apache hosting and are not part of the live site.
+
 ## 6. Moving to WordPress
 
 The page URLs already match the WordPress page slugs, so links and SEO carry over.

@@ -761,6 +761,7 @@ a.info-card:hover .info-card__icon { animation: icon-bounce .7s var(--ease-out);
 .field.has-error input, .field.has-error textarea { border-color: var(--cs-red-strong); animation: shake .4s; }
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-alert { margin: 0 0 16px; padding: 12px 16px; border-radius: 12px; background: #FDE4E2; color: var(--cs-maroon); font-weight: 600; }
+.form-alert--info { background: #E9F6E2; color: var(--cs-green-dark); }
 .btn--block { width: 100%; }
 .btn__spinner { display: none; width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid rgba(255, 255, 255, .4); border-top-color: #fff; animation: spin-t .8s linear infinite; }
 .is-loading .btn__spinner { display: inline-block; }
