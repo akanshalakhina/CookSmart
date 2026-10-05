@@ -7,3 +7,6 @@ cooksmart-website/storage/*.log
 Thumbs.db
 .vscode/
 .idea/
+
+.vercel
+.env*
