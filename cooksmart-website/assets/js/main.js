@@ -75,11 +75,8 @@
     var y = window.scrollY;
     var menuOpen = document.body.classList.contains('menu-open');
     if (header) {
-      header.classList.toggle('is-scrolled', y > 40);
-      if (!menuOpen) {
-        if (y > 420 && y > lastY + 4) header.classList.add('is-hidden');
-        else if (y < lastY - 4 || y < 420) header.classList.remove('is-hidden');
-      }
+      header.classList.toggle('is-scrolled', y > 20);
+      header.classList.remove('is-hidden');
     }
     if (toTop) {
       var max = document.documentElement.scrollHeight - window.innerHeight;

@@ -69,7 +69,10 @@ $nav = nav_items();
         </div>
 
         <div class="container site-footer__bottom">
-            <p>© <?= date('Y') ?> <?= e(COMPANY_LEGAL_NAME) ?>. All rights reserved.</p>
+            <div class="site-footer__bottom-left">
+                <p>© <?= date('Y') ?> <?= e(COMPANY_LEGAL_NAME) ?>. All rights reserved.</p>
+                <p class="site-footer__crafted">Crafted by TechVision Digital</p>
+            </div>
             <p>CookSmart® is a registered trademark.</p>
         </div>
     </div>

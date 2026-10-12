@@ -142,6 +142,9 @@ html.js:not(.hero-ready) .hero [data-hero-pack] { opacity: 0; }
 @keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(4deg); } }
 
 @media (max-width: 899.98px) {
+  .hero-slide--family.has-photo .hero-slide__bg::before {
+    background: linear-gradient(180deg, rgba(255, 249, 242, .96) 0%, rgba(255, 249, 242, .9) 55%, rgba(255, 249, 242, .45) 100%);
+  }
   .hero-slide { min-height: 0; padding: 40px 0 170px; align-items: flex-start; }
   .hero-slide__inner { grid-template-columns: 1fr; gap: 24px; }
   .hero-slide__text { text-align: left; }

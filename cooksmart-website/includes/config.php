@@ -31,7 +31,7 @@ const SOCIAL_LINKS = [
 
 // Show the floating WhatsApp button (uses PHONE_E164). Turn on once the
 // number is confirmed to be on WhatsApp.
-const WHATSAPP_ENABLED = false;
+const WHATSAPP_ENABLED = true;
 
 /* ------------------------------------------------------------------
  * Company details (from the company profile)

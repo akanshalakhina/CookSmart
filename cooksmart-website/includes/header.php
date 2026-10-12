@@ -109,24 +109,6 @@ if ($socials) {
     </div>
 </div>
 
-<div class="topbar">
-    <div class="container topbar__inner">
-        <div class="topbar__contact">
-            <a href="tel:<?= e(PHONE_E164) ?>"><?= icon('phone') ?><span><?= e(PHONE_DISPLAY) ?></span></a>
-            <a href="mailto:<?= e(CONTACT_EMAIL) ?>"><?= icon('mail') ?><span><?= e(CONTACT_EMAIL) ?></span></a>
-        </div>
-        <div class="topbar__right">
-            <p class="topbar__tagline"><?= icon('sparkle') ?><span>Quality is not expensive — it’s priceless</span></p>
-            <?php if ($socials): ?>
-            <ul class="topbar__social" aria-label="CookSmart on social media">
-                <?php foreach ($socials as $network => $link): ?>
-                <li><a href="<?= e($link) ?>" target="_blank" rel="noopener" aria-label="<?= e(ucfirst($network)) ?>"><?= icon($network) ?></a></li>
-                <?php endforeach; ?>
-            </ul>
-            <?php endif; ?>
-        </div>
-    </div>
-</div>
 
 <header class="site-header" data-header>
     <div class="container site-header__inner">
@@ -145,6 +127,8 @@ if ($socials) {
         <a class="brand-badge" href="<?= e(url()) ?>" aria-label="CookSmart home">
             <span class="brand-badge__plate" aria-hidden="true"></span>
             <img src="<?= e(asset('images/logo/cooksmart-logo.webp')) ?>" alt="CookSmart®" width="360" height="129" class="brand-badge__logo">
+            <span class="brand-badge__sub">PREMIUM FOODS</span>
+            <span class="brand-badge__line" aria-hidden="true"></span>
         </a>
 
         <nav class="main-nav main-nav--right" aria-label="Main (continued)">

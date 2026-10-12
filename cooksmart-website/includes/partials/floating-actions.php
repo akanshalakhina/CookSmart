@@ -3,14 +3,14 @@
     <a class="fab__btn fab__btn--call" href="tel:<?= e(PHONE_E164) ?>" aria-label="Call <?= e(PHONE_DISPLAY) ?>">
         <?= icon('phone') ?><span class="fab__label">Call us</span>
     </a>
+    <a class="fab__btn fab__btn--mail" href="mailto:<?= e(CONTACT_EMAIL) ?>" aria-label="Email <?= e(CONTACT_EMAIL) ?>">
+        <?= icon('mail') ?><span class="fab__label">Email us</span>
+    </a>
     <?php if (WHATSAPP_ENABLED): ?>
     <a class="fab__btn fab__btn--wa" href="https://wa.me/<?= e(ltrim(PHONE_E164, '+')) ?>" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
         <?= icon('whatsapp') ?><span class="fab__label">WhatsApp</span>
     </a>
     <?php endif; ?>
-    <a class="fab__btn fab__btn--mail" href="mailto:<?= e(CONTACT_EMAIL) ?>" aria-label="Email <?= e(CONTACT_EMAIL) ?>">
-        <?= icon('mail') ?><span class="fab__label">Email us</span>
-    </a>
     <a class="fab__btn fab__btn--shop" <?= shop_attrs() ?> aria-label="Shop Now">
         <?= icon('cart') ?><span class="fab__label">Shop Now</span>
     </a>
