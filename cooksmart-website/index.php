@@ -12,13 +12,13 @@ $page = [
     'slug'        => 'home',
     'path'        => '',
     'title'       => 'Home',
-    'description' => 'CookSmart Premium Food — Sugrihini spices (Mirchi, Haldi, Jeera, Dhania) and Chakki Fresh Atta from West Bengal. Quality is not expensive — it’s priceless. Since 2015.',
+    'description' => 'CookSmart Premium Food — Sugrihini ground spices (Mirchi, Haldi, Jeera, Dhania), Sugrihini whole spices and Chakki Fresh Atta from West Bengal. Quality is not expensive — it’s priceless. Since 2015.',
 ];
 enqueue_script('js/hero.js');
 enqueue_script('js/carousel.js');
 
 $c        = company();
-$spices   = products_in('spices');
+$spices   = products_in('ground-spices');
 $atta     = get_product('chakki-fresh-atta');
 $mirchi   = get_product('mirchi-powder');
 $haldi    = get_product('haldi-powder');
@@ -95,7 +95,7 @@ require __DIR__ . '/includes/header.php';
                         <?php endforeach; ?>
                     </div>
                     <div class="hero-actions" data-hero-item>
-                        <a class="btn btn--ghost-light magnetic" href="<?= e(url('products/#spices')) ?>"><span>View Spices</span><?= icon('arrow-right') ?></a>
+                        <a class="btn btn--ghost-light magnetic" href="<?= e(url('products/#ground-spices')) ?>"><span>View Spices</span><?= icon('arrow-right') ?></a>
                         <a class="btn-shop btn-shop--lg magnetic" <?= shop_attrs() ?>><span>Shop Now</span><?= icon('cart') ?></a>
                     </div>
                 </div>
@@ -226,7 +226,7 @@ require __DIR__ . '/includes/header.php';
 <section class="section section--cream section--pattern products-showcase" aria-labelledby="products-title">
     <div class="container">
         <div class="products-showcase__head">
-            <?php partial('section-heading', ['eyebrow' => 'Our Products', 'title' => 'Made for Every <em>Indian Kitchen</em>', 'align' => 'left', 'id' => 'products-title', 'lead' => 'Sugrihini spices and Chakki Fresh Atta — from our own production to your kitchen.']); ?>
+            <?php partial('section-heading', ['eyebrow' => 'Our Products', 'title' => 'Made for Every <em>Indian Kitchen</em>', 'align' => 'left', 'id' => 'products-title', 'lead' => 'Sugrihini ground and whole spices, and Chakki Fresh Atta — from our own production to your kitchen.']); ?>
             <div class="carousel-nav" data-anim="fade-up">
                 <button type="button" class="carousel-nav__btn" data-carousel-prev="home-products" aria-label="Previous products"><?= icon('arrow-left') ?></button>
                 <button type="button" class="carousel-nav__btn" data-carousel-next="home-products" aria-label="Next products"><?= icon('arrow-right') ?></button>

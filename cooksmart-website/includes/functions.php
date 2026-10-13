@@ -124,6 +124,28 @@ function products_in(string $category): array
     return array_filter(products(), static fn ($p) => $p['category'] === $category);
 }
 
+/** Product categories in display order; keys match `category` in data/products.php. */
+function product_categories(): array
+{
+    return [
+        'ground-spices' => [
+            'label' => 'Ground Spices',
+            'range' => 'Sugrihini',
+            'text'  => 'Everyday Mirchi, Haldi, Jeera and Dhania powder — ready to use, straight from pack to pan.',
+        ],
+        'whole-spices' => [
+            'label' => 'Whole Spices',
+            'range' => 'Sugrihini',
+            'text'  => 'Premium whole seeds for tempering, pickles and Bengali classics — from jeera and sarso to panch phoron.',
+        ],
+        'atta' => [
+            'label' => 'Atta',
+            'range' => 'CookSmart Chakki Fresh',
+            'text'  => 'Natural whole wheat atta, chakki fresh — no additives, no preservatives.',
+        ],
+    ];
+}
+
 function company(): array
 {
     static $company = null;

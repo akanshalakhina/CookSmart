@@ -14,7 +14,7 @@ $detailUrl = url('products/' . $product['slug'] . '/');
                 <?= e($product['range']) ?><?php if ($product['range_bn'] !== ''): ?> · <span lang="bn"><?= e($product['range_bn']) ?></span><?php endif; ?>
             </p>
             <h3 class="product-card__name"><?= e($product['name']) ?></h3>
-            <p class="product-card__hi" lang="hi"><?= e($product['name_hi']) ?></p>
+            <p class="product-card__hi" lang="<?= e($product['name_lang']) ?>"><?= e($product['name_local']) ?></p>
             <div class="product-card__meta">
                 <?php foreach ($product['net_weights'] as $w): ?><span class="chip"><?= e($w) ?></span><?php endforeach; ?>
                 <span class="product-card__more">View details <?= icon('arrow-right') ?></span>

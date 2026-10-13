@@ -15,7 +15,7 @@ if ($product === null) {
     exit;
 }
 
-$fullName = ($product['category'] === 'spices' ? 'Sugrihini ' : 'CookSmart ') . $product['name'];
+$fullName = ($product['range'] === 'Sugrihini' ? 'Sugrihini ' : 'CookSmart ') . $product['name'];
 $page = [
     'slug'        => 'products',
     'path'        => 'products/' . $product['slug'] . '/',
@@ -32,8 +32,11 @@ $page = [
 enqueue_script('js/product.js');
 enqueue_script('js/carousel.js');
 
+// same-category products first, then the rest of the range
 $others = array_filter(products(), static fn ($p) => $p['slug'] !== $product['slug']);
+uasort($others, static fn ($a, $b) => ($b['category'] === $product['category']) <=> ($a['category'] === $product['category']));
 $views  = array_keys($product['images']);
+$viewLabels = ['small' => 'smaller pack'];
 
 require __DIR__ . '/includes/header.php';
 ?>
@@ -52,14 +55,14 @@ require __DIR__ . '/includes/header.php';
                 <span class="product-gallery__blob" aria-hidden="true"></span>
                 <span class="product-gallery__ring" aria-hidden="true"></span>
                 <?php foreach ($views as $i => $view): ?>
-                <img src="<?= e(product_img($product, $view)) ?>" alt="<?= e($fullName . ' pack' . ($i ? ' — alternate view' : ', ' . $product['net_weights'][0])) ?>"
+                <img src="<?= e(product_img($product, $view)) ?>" alt="<?= e($fullName . ($i ? ' — ' . ($viewLabels[$view] ?? 'alternate view') : ' pack, ' . $product['net_weights'][0])) ?>"
                      class="product-gallery__img<?= $i === 0 ? ' is-active' : '' ?>" width="600" height="900" data-gallery-img="<?= $i ?>"<?= $i ? ' loading="lazy"' : ' fetchpriority="high"' ?>>
                 <?php endforeach; ?>
             </div>
             <?php if (count($views) > 1): ?>
             <div class="product-gallery__thumbs" role="group" aria-label="Pack views">
                 <?php foreach ($views as $i => $view): ?>
-                <button type="button" class="product-gallery__thumb<?= $i === 0 ? ' is-active' : '' ?>" data-gallery-thumb="<?= $i ?>" aria-label="Show view <?= $i + 1 ?>" aria-pressed="<?= $i === 0 ? 'true' : 'false' ?>">
+                <button type="button" class="product-gallery__thumb<?= $i === 0 ? ' is-active' : '' ?>" data-gallery-thumb="<?= $i ?>" aria-label="<?= e(isset($viewLabels[$view]) ? 'Show ' . $viewLabels[$view] : 'Show view ' . ($i + 1)) ?>" aria-pressed="<?= $i === 0 ? 'true' : 'false' ?>">
                     <img src="<?= e(product_img($product, $view, 'sm')) ?>" alt="" width="70" height="105" loading="lazy">
                 </button>
                 <?php endforeach; ?>
@@ -72,7 +75,7 @@ require __DIR__ . '/includes/header.php';
                 <?= e($product['range']) ?><?php if ($product['range_bn'] !== ''): ?> · <span lang="bn"><?= e($product['range_bn']) ?></span><?php endif; ?>
             </p>
             <h2 id="product-name" class="product-info__name" data-anim="split-up"><?= e($product['name']) ?></h2>
-            <p class="product-info__hi" lang="hi" data-anim="fade-up"><?= e($product['name_hi']) ?></p>
+            <p class="product-info__hi" lang="<?= e($product['name_lang']) ?>" data-anim="fade-up"><?= e($product['name_local']) ?></p>
             <?= swoosh_line() ?>
             <p class="product-info__desc" data-anim="fade-up" data-delay="0.1"><?= e($product['description']) ?></p>
 

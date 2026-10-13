@@ -7,6 +7,9 @@
   var pill = document.querySelector('.filter-bar__pill');
   if (!grid || !buttons.length) return;
 
+  // old links used #spices before whole spices got their own category
+  var aliases = { spices: 'ground-spices' };
+
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var canFlip = !!(window.gsap && window.Flip) && !reduceMotion;
   if (canFlip) gsap.registerPlugin(Flip);
@@ -18,12 +21,14 @@
   }
 
   function apply(filter, animate) {
+    filter = aliases[filter] || filter;
     if (!buttons.some(function (b) { return b.dataset.filter === filter; })) filter = 'all';
-    var cards = Array.prototype.slice.call(grid.querySelectorAll('.product-card'));
-    var state = animate && canFlip ? Flip.getState(cards) : null;
+    // cards and their category headings
+    var items = Array.prototype.slice.call(grid.querySelectorAll('[data-category]'));
+    var state = animate && canFlip ? Flip.getState(items) : null;
 
-    cards.forEach(function (card) {
-      card.classList.toggle('is-hidden', filter !== 'all' && card.dataset.category !== filter);
+    items.forEach(function (item) {
+      item.classList.toggle('is-hidden', filter !== 'all' && item.dataset.category !== filter);
     });
     buttons.forEach(function (b) {
       var on = b.dataset.filter === filter;
@@ -44,6 +49,11 @@
 
   buttons.forEach(function (b) {
     b.addEventListener('click', function () { apply(b.dataset.filter, true); });
+  });
+  // footer category links point at #category on this same page
+  window.addEventListener('hashchange', function () {
+    apply(location.hash.slice(1) || 'all', true);
+    document.querySelector('.filter-bar').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
   });
   window.addEventListener('resize', function () { movePill(document.querySelector('.filter-bar__btn.is-active')); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { movePill(document.querySelector('.filter-bar__btn.is-active')); });

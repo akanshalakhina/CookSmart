@@ -106,15 +106,15 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
         <?php partial('section-heading', ['eyebrow' => 'Our Brands', 'title' => 'The CookSmart <em>family</em>', 'id' => 'brands-title']); ?>
         <div class="brands__grid">
-            <a class="brand-tile brand-tile--sugrihini" href="<?= e(url('products/#spices')) ?>" data-anim="slide-left">
+            <a class="brand-tile brand-tile--sugrihini" href="<?= e(url('products/')) ?>" data-anim="slide-left">
                 <div class="brand-tile__text">
                     <p class="brand-tile__kicker">Spices</p>
                     <h3 class="brand-tile__name">Sugrihini <span lang="bn">সুগৃহিণী</span></h3>
-                    <p>“The good homemaker” — Mirchi, Haldi, Jeera and Dhania powder.</p>
+                    <p>“The good homemaker” — Mirchi, Haldi, Jeera and Dhania powder, plus <?= count(products_in('whole-spices')) ?> premium whole spices.</p>
                     <span class="brand-tile__link">Explore spices <?= icon('arrow-right') ?></span>
                 </div>
                 <div class="brand-tile__packs" aria-hidden="true">
-                    <?php foreach (products_in('spices') as $i => $p): ?>
+                    <?php foreach (['mirchi-powder', 'whole-cumin', 'haldi-powder', 'whole-black-mustard'] as $i => $s): $p = get_product($s); ?>
                     <img src="<?= e(product_img($p, 'primary', 'sm')) ?>" alt="" width="120" height="180" loading="lazy" class="brand-tile__pack">
                     <?php endforeach; ?>
                 </div>

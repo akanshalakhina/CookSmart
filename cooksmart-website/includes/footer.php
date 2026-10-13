@@ -42,9 +42,10 @@ $nav = nav_items();
             <div class="footer-col">
                 <h2 class="footer-col__title">Our Products</h2>
                 <ul class="footer-links">
-                    <?php foreach (products() as $p): ?>
-                    <li><a href="<?= e(url('products/' . $p['slug'] . '/')) ?>"><?= icon('arrow-right') ?><?= e($p['name']) ?></a></li>
+                    <?php foreach (product_categories() as $key => $cat): ?>
+                    <li><a href="<?= e(url('products/#' . $key)) ?>"><?= icon('arrow-right') ?><?= e($cat['label']) ?> (<?= count(products_in($key)) ?>)</a></li>
                     <?php endforeach; ?>
+                    <li><a href="<?= e(url('products/')) ?>"><?= icon('arrow-right') ?>All Products</a></li>
                 </ul>
             </div>
 

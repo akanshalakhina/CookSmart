@@ -161,8 +161,12 @@ require __DIR__ . '/includes/header.php';
                     <div class="field field--select">
                         <select id="f-product" name="product">
                             <option value="">Any / not specific</option>
-                            <?php foreach (products() as $p): ?>
-                            <option value="<?= e($p['slug']) ?>"<?= $selectedProduct === $p['slug'] ? ' selected' : '' ?>><?= e($p['name']) ?></option>
+                            <?php foreach (product_categories() as $key => $cat): ?>
+                            <optgroup label="<?= e($cat['label']) ?>">
+                                <?php foreach (products_in($key) as $p): ?>
+                                <option value="<?= e($p['slug']) ?>"<?= $selectedProduct === $p['slug'] ? ' selected' : '' ?>><?= e($p['name']) ?></option>
+                                <?php endforeach; ?>
+                            </optgroup>
                             <?php endforeach; ?>
                         </select>
                         <label for="f-product">Product</label>

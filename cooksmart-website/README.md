@@ -32,6 +32,7 @@ Also update `robots.txt` with the real sitemap URL.
 ## 3. Editing content
 
 - **Products** → `data/products.php`. This is the only source of product data; list only what is printed on the packs.
+- **Product categories** (Ground Spices, Whole Spices, Atta) → `product_categories()` in `includes/functions.php`. The Products page, footer and enquiry form group products by these.
 - **Company text** (vision, mission, heritage, segments, commitments) → `data/company.php`.
 - **Contact details & addresses** → `includes/config.php`.
 

@@ -42,7 +42,7 @@ return [
     ],
 
     'categories' => [
-        ['icon' => 'chili', 'label' => 'Spices',  'text' => 'Everyday ground spices for the Indian kitchen.'],
+        ['icon' => 'chili', 'label' => 'Spices',  'text' => 'Everyday ground and whole spices for the Indian kitchen.'],
         ['icon' => 'bean',  'label' => 'Pulses',  'text' => 'A core category of our business.'],
         ['icon' => 'wheat', 'label' => 'Cereals', 'text' => 'Grains and chakki-fresh atta.'],
     ],
