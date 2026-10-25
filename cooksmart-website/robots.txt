@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
 
 # Update the domain once the site is live:
 # Sitemap: https://www.your-domain.com/sitemap.xml

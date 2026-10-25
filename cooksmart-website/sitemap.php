@@ -7,7 +7,7 @@ require_once __DIR__ . '/includes/functions.php';
 
 header('Content-Type: application/xml; charset=utf-8');
 
-$paths = ['', 'about-us/', 'products/', 'company-policy/', 'contact-us/'];
+$paths = ['', 'about-us/', 'products/', 'company-policy/', 'career/', 'contact-us/'];
 foreach (products() as $p) {
     $paths[] = 'products/' . $p['slug'] . '/';
 }

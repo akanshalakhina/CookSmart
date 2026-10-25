@@ -10,6 +10,15 @@
   var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var startedAt = performance.now();
 
+  /* The curtain only ever travels UP (covers the page from below, then leaves through the top).
+     When it is put back below the screen it must jump there, never slide down across the page. */
+  function resetCurtain() {
+    html.classList.add('curtain-reset');
+    html.classList.remove('curtain-in', 'is-entering', 'curtain-out');
+    void html.offsetWidth; // apply the jump immediately
+    requestAnimationFrame(function () { html.classList.remove('curtain-reset'); });
+  }
+
   /* ---------- Ready signal (after preloader / curtain) ---------- */
   function signalReady() {
     if (window.csReady) return;
@@ -36,7 +45,7 @@
       requestAnimationFrame(function () {
         html.classList.add('curtain-out');
         setTimeout(signalReady, 260);
-        setTimeout(function () { html.classList.remove('is-entering', 'curtain-out'); }, 900);
+        setTimeout(resetCurtain, 900);
       });
     });
   } else {
@@ -61,7 +70,7 @@
     setTimeout(function () { location.href = url.href; }, 620);
   });
   window.addEventListener('pageshow', function (e) {
-    if (e.persisted) html.classList.remove('curtain-in', 'is-entering', 'curtain-out');
+    if (e.persisted) resetCurtain();
   });
 
   /* ---------- Header: shrink on scroll, hide on scroll down ---------- */

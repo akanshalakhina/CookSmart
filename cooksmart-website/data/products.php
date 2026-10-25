@@ -3,7 +3,14 @@
  * CookSmart products — the only source of product content on the site.
  *
  * Add more products or pack sizes here, using only values printed on the
- * actual packs. Images live in assets/images/products/{file}.webp and {file}-sm.webp.
+ * actual packs.
+ *
+ * `packs` lists every size a product is sold in, largest first (the first pack is the one
+ * shown on cards). Each pack needs four images in assets/images/products/:
+ *   {slug}-{id}-front.webp  {slug}-{id}-front-sm.webp  {slug}-{id}-back.webp  {slug}-{id}-back-sm.webp
+ * `scale` is the pack's height relative to the biggest pack, used to draw the sizes side by side.
+ * `price_pack` is set when the product is also sold as a small pack at that rupee price
+ * ("Available at ₹5" is highlighted in the product description); it has no image of its own.
  * `category` must be a key of product_categories() in includes/functions.php.
  * `name_local` is the second-language name printed on the pack and `name_lang`
  * its language code (Hindi on the powders and atta, Bengali on whole spices).
@@ -11,8 +18,11 @@
  */
 declare(strict_types=1);
 
-$spiceDescription = static fn (string $name, string $weight): string =>
-    "Sugrihini {$name} from CookSmart — a ready-to-use kitchen essential, packed in a convenient {$weight} pack.";
+$spiceDescription = static fn (string $name): string =>
+    "Sugrihini {$name} from CookSmart — a ready-to-use kitchen essential, packed fresh in convenient pack sizes.";
+
+$pack = static fn (string $id, string $label, float $scale = 1.0): array =>
+    ['id' => $id, 'label' => $label, 'scale' => $scale];
 
 return [
     'mirchi-powder' => [
@@ -23,12 +33,12 @@ return [
         'range'       => 'Sugrihini',
         'range_bn'    => 'সুগৃহিণী',
         'category'    => 'ground-spices',
-        'net_weights' => ['100 g'],
-        'images'      => ['primary' => 'mirchi-powder-100g', 'alt' => 'mirchi-powder-alt'],
+        'packs'       => [$pack('50g', '50 g')],
+        'price_pack'  => 5,
         'accent'      => '#E41019',
         'accent_soft' => '#FDE4E2',
         'claims'      => ['100% Satisfaction Guarantee', 'Vegetarian'],
-        'description' => $spiceDescription('Mirchi Powder', '100 g'),
+        'description' => $spiceDescription('Mirchi Powder'),
     ],
     'haldi-powder' => [
         'slug'        => 'haldi-powder',
@@ -38,12 +48,12 @@ return [
         'range'       => 'Sugrihini',
         'range_bn'    => 'সুগৃহিণী',
         'category'    => 'ground-spices',
-        'net_weights' => ['100 g'],
-        'images'      => ['primary' => 'haldi-powder-100g', 'alt' => 'haldi-powder-alt'],
+        'packs'       => [$pack('100g', '100 g'), $pack('50g', '50 g', 0.84)],
+        'price_pack'  => 5,
         'accent'      => '#E9A900',
         'accent_soft' => '#FFF4CC',
         'claims'      => ['100% Satisfaction Guarantee', 'Vegetarian'],
-        'description' => $spiceDescription('Haldi Powder', '100 g'),
+        'description' => $spiceDescription('Haldi Powder'),
     ],
     'jeera-powder' => [
         'slug'        => 'jeera-powder',
@@ -53,12 +63,12 @@ return [
         'range'       => 'Sugrihini',
         'range_bn'    => 'সুগৃহিণী',
         'category'    => 'ground-spices',
-        'net_weights' => ['50 g'],
-        'images'      => ['primary' => 'jeera-powder-50g', 'alt' => 'jeera-powder-alt'],
+        'packs'       => [$pack('50g', '50 g')],
+        'price_pack'  => 5,
         'accent'      => '#C07C0A',
         'accent_soft' => '#F8EAD3',
         'claims'      => ['100% Satisfaction Guarantee', 'Vegetarian'],
-        'description' => $spiceDescription('Jeera Powder', '50 g'),
+        'description' => $spiceDescription('Jeera Powder'),
     ],
     'dhania-powder' => [
         'slug'        => 'dhania-powder',
@@ -68,12 +78,12 @@ return [
         'range'       => 'Sugrihini',
         'range_bn'    => 'সুগৃহিণী',
         'category'    => 'ground-spices',
-        'net_weights' => ['50 g'],
-        'images'      => ['primary' => 'dhania-powder-50g', 'alt' => 'dhania-powder-alt'],
+        'packs'       => [$pack('50g', '50 g')],
+        'price_pack'  => 5,
         'accent'      => '#9A8418',
         'accent_soft' => '#F3EFD2',
         'claims'      => ['100% Satisfaction Guarantee', 'Vegetarian'],
-        'description' => $spiceDescription('Dhania Powder', '50 g'),
+        'description' => $spiceDescription('Dhania Powder'),
     ],
     'whole-yellow-mustard' => [
         'slug'        => 'whole-yellow-mustard',
@@ -83,8 +93,8 @@ return [
         'range'       => 'Sugrihini',
         'range_bn'    => 'সুগৃহিণী',
         'category'    => 'whole-spices',
-        'net_weights' => ['50 g'],
-        'images'      => ['primary' => 'whole-yellow-mustard-50g', 'small' => 'whole-yellow-mustard-small'],
+        'packs'       => [$pack('50g', '50 g')],
+        'price_pack'  => 5,
         'accent'      => '#CDB000',
         'accent_soft' => '#FAF5C8',
         'claims'      => ['Premium', 'Vegetarian'],
@@ -98,8 +108,8 @@ return [
         'range'       => 'Sugrihini',
         'range_bn'    => 'সুগৃহিণী',
         'category'    => 'whole-spices',
-        'net_weights' => ['50 g'],
-        'images'      => ['primary' => 'whole-black-mustard-50g', 'small' => 'whole-black-mustard-small'],
+        'packs'       => [$pack('50g', '50 g')],
+        'price_pack'  => 5,
         'accent'      => '#3A3B57',
         'accent_soft' => '#E6E6EF',
         'claims'      => ['Premium', 'Vegetarian'],
@@ -113,8 +123,8 @@ return [
         'range'       => 'Sugrihini',
         'range_bn'    => 'সুগৃহিণী',
         'category'    => 'whole-spices',
-        'net_weights' => ['50 g'],
-        'images'      => ['primary' => 'whole-cumin-50g', 'small' => 'whole-cumin-small'],
+        'packs'       => [$pack('50g', '50 g')],
+        'price_pack'  => 5,
         'accent'      => '#7A3632',
         'accent_soft' => '#F4E4DE',
         'claims'      => ['Premium', 'Vegetarian'],
@@ -128,8 +138,8 @@ return [
         'range'       => 'Sugrihini',
         'range_bn'    => 'সুগৃহিণী',
         'category'    => 'whole-spices',
-        'net_weights' => ['50 g'],
-        'images'      => ['primary' => 'whole-fenugreek-50g', 'small' => 'whole-fenugreek-small'],
+        'packs'       => [$pack('50g', '50 g')],
+        'price_pack'  => 5,
         'accent'      => '#9C9712',
         'accent_soft' => '#F6F5CC',
         'claims'      => ['Premium', 'Vegetarian'],
@@ -143,8 +153,8 @@ return [
         'range'       => 'Sugrihini',
         'range_bn'    => 'সুগৃহিণী',
         'category'    => 'whole-spices',
-        'net_weights' => ['50 g'],
-        'images'      => ['primary' => 'whole-fennel-seed-50g', 'small' => 'whole-fennel-seed-small'],
+        'packs'       => [$pack('50g', '50 g')],
+        'price_pack'  => 5,
         'accent'      => '#6E7A2C',
         'accent_soft' => '#EEF0D8',
         'claims'      => ['Premium', 'Vegetarian'],
@@ -158,8 +168,8 @@ return [
         'range'       => 'Sugrihini',
         'range_bn'    => 'সুগৃহিণী',
         'category'    => 'whole-spices',
-        'net_weights' => ['50 g'],
-        'images'      => ['primary' => 'whole-carom-50g', 'small' => 'whole-carom-small'],
+        'packs'       => [$pack('50g', '50 g')],
+        'price_pack'  => 5,
         'accent'      => '#2F8F2A',
         'accent_soft' => '#DFF1DA',
         'claims'      => ['Premium', 'Vegetarian'],
@@ -173,8 +183,8 @@ return [
         'range'       => 'Sugrihini',
         'range_bn'    => 'সুগৃহিণী',
         'category'    => 'whole-spices',
-        'net_weights' => ['50 g'],
-        'images'      => ['primary' => 'whole-panch-phoron-50g', 'small' => 'whole-panch-phoron-small'],
+        'packs'       => [$pack('50g', '50 g')],
+        'price_pack'  => 5,
         'accent'      => '#B8722F',
         'accent_soft' => '#F6E7D6',
         'claims'      => ['Premium', 'Vegetarian'],
@@ -188,8 +198,8 @@ return [
         'range'       => 'CookSmart Chakki Fresh',
         'range_bn'    => '',
         'category'    => 'atta',
-        'net_weights' => ['5 kg'],
-        'images'      => ['primary' => 'chakki-fresh-atta-5kg'],
+        'packs'       => [$pack('5kg', '5 kg'), $pack('1kg', '1 kg', 0.78)],
+        'price_pack'  => null,
         'accent'      => '#ED5A04',
         'accent_soft' => '#FFE8D6',
         'claims'      => ['Premium Quality', 'Natural & Fresh', '100% Natural', 'No Additives', 'No Preservatives', 'Natural Whole Wheat', 'Hygienically Packed', 'Vegetarian'],

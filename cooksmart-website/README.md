@@ -1,6 +1,6 @@
 # CookSmart® website
 
-Multi-page PHP website for **Cooksmart Premium Food Private Limited**: Home, About Us, Products (with a page for each product), Company Policy and Contact Us. Shop Now links to an external shop.
+Multi-page PHP website for **Cooksmart Premium Food Private Limited**: Home, About Us, Products (with a page for each product), Company Policy, Career and Contact Us. Shop Now links to an external shop.
 
 - Plain PHP 8 with no framework, no database and no build step. It runs on any Apache shared hosting.
 - Animations use GSAP 3 + ScrollTrigger from a CDN. They honour *reduced motion*, and the content still shows if JavaScript fails.
@@ -15,7 +15,7 @@ Multi-page PHP website for **Cooksmart Premium Food Private Limited**: Home, Abo
 | `SHOP_URL` | Full link of the online shop. Until it is set, every Shop Now button shows a "coming soon" notice. |
 | `SITE_URL` | Your domain, e.g. `https://www.cooksmart.in` (used for SEO links and the sitemap). |
 | `SOCIAL_LINKS` | Facebook / Instagram / YouTube / LinkedIn / X URLs. Empty ones are hidden. |
-| `WHATSAPP_ENABLED` | Set to `true` once +91 98000 87155 is confirmed on WhatsApp. This adds a floating WhatsApp button. |
+| `WHATSAPP_ENABLED` | Set to `true` once +91 70036 94825 is confirmed on WhatsApp. This adds a floating WhatsApp button. |
 | `CONTACT_TO_EMAIL` | Inbox that receives enquiry-form emails. It is `cooksmartkol@gmail.com` now. |
 
 Also update `robots.txt` with the real sitemap URL.
@@ -27,11 +27,17 @@ Also update `robots.txt` with the real sitemap URL.
 | `assets/images/logo/cooksmart-logo.png` (+ `.webp`) | Cut out from a photo of the logo. **Ask the packaging designer for the original vector logo (SVG/AI/PDF)** and replace it. |
 | `assets/images/hero/family-kitchen.webp` | *Optional.* Add a warm family/kitchen photo (about 1600×900) and home slide 1 switches automatically to a photo banner, like Ganesh Consumer's. |
 | About page leadership card | Shows an "SS" monogram. A comment in `about-us.php` shows where to add a real photo. |
-| `assets/images/products/*.webp` | Transparent cut-outs of the supplied pack shots. Add new products in `data/products.php` and drop `{name}.webp` + `{name}-sm.webp` here. |
+| `assets/images/products/*.webp` | Transparent cut-outs of the supplied pack shots, one front and one back per pack size (see section 3). The 50 g / 1 kg weight labels and the back views were produced from the supplied artwork — swap in real packaging renders when available. |
 
 ## 3. Editing content
 
 - **Products** → `data/products.php`. This is the only source of product data; list only what is printed on the packs.
+  Every product has a `packs` list (for example Haldi Powder: 100 g and 50 g; Chakki Fresh Atta: 5 kg and 1 kg). On the product page the
+  pack you pick stays in colour and the other sizes turn grey, and a Front / Back switch shows the back of the pack. Each pack needs four images in
+  `assets/images/products/`: `{slug}-{pack}-front.webp`, `{slug}-{pack}-front-sm.webp`, `{slug}-{pack}-back.webp`, `{slug}-{pack}-back-sm.webp`
+  (900 px and 420 px tall). The **back** images are designed stand-ins (brand header, net weight, company address, customer care number) —
+  replace them with the real back-of-pack artwork when you have it (it must also carry FSSAI number, MRP, batch details and ingredients).
+  `price_pack` (₹5) switches on the highlighted **"Available at ₹5"** line in the description; leave it `null` for products without that pack.
 - **Product categories** (Ground Spices, Whole Spices, Atta) → `product_categories()` in `includes/functions.php`. The Products page, footer and enquiry form group products by these.
 - **Company text** (vision, mission, heritage, segments, commitments) → `data/company.php`.
 - **Contact details & addresses** → `includes/config.php`.
@@ -46,6 +52,16 @@ php -S localhost:8000 router.php
 
 Then open http://localhost:8000. `router.php` copies the `.htaccess` clean URLs for PHP's built-in server; Apache doesn't use it.
 On localhost the enquiry form **writes to `storage/enquiries.log` instead of sending email**.
+
+## 4b. Career page and owner area
+
+- `/career/` lists the job openings; each one has an **Apply Now** button (opens the contact form with the job filled in) and a WhatsApp button.
+- `/admin/` is the owner area. **The first time it is opened it asks you to create a password** — do this right after uploading the site,
+  before you share the link. Then sign in to post, edit, close/reopen or delete openings; changes appear on the Career page immediately.
+- Openings are saved in `storage/jobs.json` and the password (hashed) in `storage/admin.json`. `storage/` is blocked from the web and must be
+  **writable** by PHP (on Hostinger this is the default; permissions 755/644). Back these two files up if you move the site.
+- Forgot the password? Delete `storage/admin.json` and open `/admin/` again to create a new one (your job openings are kept).
+- Wrong passwords are limited to 5 tries per 15 minutes. The owner area is excluded from search engines (`robots.txt` + `noindex`).
 
 ## 5. Put it on hosting (Apache / cPanel / Hostinger etc.)
 
@@ -101,14 +117,14 @@ All animations come from `data-anim` attributes, so content blocks keep animatin
 
 ```
 cooksmart-website/
-├── index.php, about-us.php, products.php, product.php,
+├── index.php, about-us.php, products.php, product.php, career.php, admin.php,
 │   company-policy.php, contact-us.php, contact-submit.php, 404.php, sitemap.php
 ├── .htaccess · router.php (dev only) · robots.txt
-├── includes/   config.php · functions.php · header.php · footer.php · partials/
+├── includes/   config.php · functions.php · careers.php · header.php · footer.php · partials/
 ├── data/       products.php · company.php
-├── storage/    enquiry log in dev (blocked from the web)
+├── storage/    jobs.json · admin.json (created by the owner area) · enquiry log in dev — blocked from the web
 └── assets/
     ├── css/    main.css (global) · pages.css (sections)
-    ├── js/     animations.js · main.js · hero.js · carousel.js · products.js · product.js · policy.js · contact.js
+    ├── js/     animations.js · main.js · hero.js · carousel.js · products.js · product.js · policy.js · contact.js · admin.js
     └── images/ logo/ · products/ · spice-plate.svg · pattern-*.svg · og-image.jpg
 ```

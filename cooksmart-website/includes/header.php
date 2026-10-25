@@ -47,6 +47,9 @@ if ($socials) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= e($titleTag) ?></title>
 <meta name="description" content="<?= e($description) ?>">
+<?php if (!empty($page['noindex'])): ?>
+<meta name="robots" content="noindex, nofollow">
+<?php endif; ?>
 <link rel="canonical" href="<?= e($canonical) ?>">
 <meta name="theme-color" content="#C3161A">
 
@@ -96,6 +99,9 @@ if ($socials) {
     ], $page['breadcrumbs'], array_keys($page['breadcrumbs'])),
 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?></script>
 <?php endif; ?>
+<?php foreach ($page['schemas'] ?? [] as $extraSchema): ?>
+<script type="application/ld+json"><?= json_encode($extraSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?></script>
+<?php endforeach; ?>
 </head>
 <body class="page-<?= e($slug) ?> <?= e($page['body_class'] ?? '') ?>">
 <a class="skip-link" href="#main">Skip to content</a>

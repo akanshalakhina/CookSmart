@@ -81,6 +81,7 @@ function nav_items(): array
         ],
         'right' => [
             'company-policy' => ['label' => 'Company Policy', 'path' => 'company-policy/'],
+            'career'         => ['label' => 'Career',         'path' => 'career/'],
             'contact-us'     => ['label' => 'Contact Us',     'path' => 'contact-us/'],
         ],
     ];
@@ -152,11 +153,47 @@ function company(): array
     return $company ??= require __DIR__ . '/../data/company.php';
 }
 
-/** Product image URL; $size '' = large (900px tall), 'sm' = 420px tall. */
+/**
+ * Pack image URL. $view is 'front' or 'back'; $size '' = large (900px tall), 'sm' = 420px tall.
+ * Files: assets/images/products/{slug}-{pack}-{view}[-sm].webp
+ */
+function pack_img(array $product, string $packId, string $view = 'front', string $size = ''): string
+{
+    $view = $view === 'back' ? 'back' : 'front';
+    return asset('images/products/' . $product['slug'] . '-' . $packId . '-' . $view . ($size === 'sm' ? '-sm' : '') . '.webp');
+}
+
+/** Image of a product's first (largest) pack: $which 'primary' = front, 'back' = back. */
 function product_img(array $product, string $which = 'primary', string $size = ''): string
 {
-    $file = $product['images'][$which] ?? $product['images']['primary'];
-    return asset('images/products/' . $file . ($size === 'sm' ? '-sm' : '') . '.webp');
+    return pack_img($product, $product['packs'][0]['id'], $which === 'back' ? 'back' : 'front', $size);
+}
+
+/** Width / height of a pack image (for laying the sizes out side by side). */
+function pack_aspect(array $product, string $packId): float
+{
+    $file = __DIR__ . '/../assets/images/products/' . $product['slug'] . '-' . $packId . '-front-sm.webp';
+    $size = is_file($file) ? @getimagesize($file) : false;
+    return ($size && $size[1] > 0) ? round($size[0] / $size[1], 4) : 0.67;
+}
+
+/** Pack labels of a product, largest first: ['100 g', '50 g']. */
+function pack_labels(array $product): array
+{
+    return array_column($product['packs'], 'label');
+}
+
+/** "100 g & 50 g" for titles and alt text. */
+function pack_summary(array $product): string
+{
+    $labels = pack_labels($product);
+    return count($labels) > 1 ? implode(', ', array_slice($labels, 0, -1)) . ' & ' . end($labels) : $labels[0];
+}
+
+/** "₹5" for a rupee price. */
+function rupees(int $amount): string
+{
+    return '₹' . $amount;
 }
 
 /** Multibyte-safe length / truncate that work even when the mbstring extension is missing. */
@@ -182,6 +219,7 @@ function enquiry_types(): array
         'trade'    => 'Trade & Distribution (General / Modern Trade)',
         'horeca'   => 'HORECA & Bulk',
         'feedback' => 'Product Feedback',
+        'career'   => 'Career / Job Application',
     ];
 }
 
@@ -258,6 +296,17 @@ function icon(string $name, string $class = ''): string
         'youtube'   => '<path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/>',
         'linkedin'  => '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>',
         'x'         => '<path d="M4 4h4.5L20 20h-4.5z"/><path d="M20 4l-6.2 6.9"/><path d="M10.2 13.1 4 20"/>',
+        'briefcase' => '<path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/>',
+        'clock'     => '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+        'calendar'  => '<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>',
+        'rupee'     => '<path d="M6 3h12"/><path d="M6 8h12"/><path d="m6 13 8.5 8"/><path d="M6 13h3"/><path d="M9 13c6.667 0 6.667-10 0-10"/>',
+        'edit'      => '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+        'trash'     => '<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+        'plus'      => '<path d="M5 12h14"/><path d="M12 5v14"/>',
+        'lock'      => '<rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+        'log-out'   => '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/>',
+        'pause'     => '<rect width="4" height="16" x="6" y="4" rx="1"/><rect width="4" height="16" x="14" y="4" rx="1"/>',
+        'play'      => '<path d="M6 3 20 12 6 21Z"/>',
     ];
     $paths = $icons[$name] ?? '';
     $cls   = trim('icon icon-' . $name . ' ' . $class);
@@ -273,3 +322,5 @@ function swoosh_line(string $class = ''): string
         . '<path class="swoosh-line__green" d="M14 18 C 70 8, 150 6, 206 15" stroke="url(#sw-' . $id . ')" />'
         . '</svg>';
 }
+
+require_once __DIR__ . '/careers.php';

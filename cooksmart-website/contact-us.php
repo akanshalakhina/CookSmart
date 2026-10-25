@@ -20,11 +20,21 @@ if ($selectedProduct !== '' && get_product($selectedProduct) === null) {
     $selectedProduct = '';
 }
 
+// links from the Career page: /contact-us/?type=career&job=Sales+Executive
+$selectedType = (string) ($old['type'] ?? ($_GET['type'] ?? ''));
+if (!isset(enquiry_types()[$selectedType])) {
+    $selectedType = '';
+}
+$prefillMessage = (string) ($old['message'] ?? '');
+if ($prefillMessage === '' && $selectedType === 'career' && !empty($_GET['job'])) {
+    $prefillMessage = 'I would like to apply for the position of ' . text_cut(trim(preg_replace('/[\r\n\0]+/', ' ', (string) $_GET['job'])), 100) . '. ';
+}
+
 $page = [
     'slug'        => 'contact-us',
     'path'        => 'contact-us/',
     'title'       => 'Contact Us',
-    'description' => 'Contact Cooksmart Premium Food Private Limited — Registered Office: Singur, Hooghly. Corporate Office: Sarat Bose Road, Kolkata. Call +91 98000 87155 or email cooksmartkol@gmail.com.',
+    'description' => 'Contact Cooksmart Premium Food Private Limited — Registered Office: Singur, Hooghly. Corporate Office: Sarat Bose Road, Kolkata. Call ' . PHONE_DISPLAY . ' or email ' . CONTACT_EMAIL . '.',
     'breadcrumbs' => [['label' => 'Home', 'path' => ''], ['label' => 'Contact Us', 'path' => 'contact-us/']],
 ];
 enqueue_script('js/contact.js');
@@ -153,7 +163,7 @@ require __DIR__ . '/includes/header.php';
                     <div class="field field--select">
                         <select id="f-type" name="type">
                             <?php foreach (enquiry_types() as $key => $label): ?>
-                            <option value="<?= e($key) ?>"<?= ($old['type'] ?? '') === $key ? ' selected' : '' ?>><?= e($label) ?></option>
+                            <option value="<?= e($key) ?>"<?= $selectedType === $key ? ' selected' : '' ?>><?= e($label) ?></option>
                             <?php endforeach; ?>
                         </select>
                         <label for="f-type">Enquiry type</label>
@@ -173,7 +183,7 @@ require __DIR__ . '/includes/header.php';
                     </div>
                 </div>
                 <div class="field<?= isset($errors['message']) ? ' has-error' : '' ?>">
-                    <textarea id="f-message" name="message" rows="5" placeholder=" " required maxlength="2000"><?= e($old['message'] ?? '') ?></textarea>
+                    <textarea id="f-message" name="message" rows="5" placeholder=" " required maxlength="2000"><?= e($prefillMessage) ?></textarea>
                     <label for="f-message">Your message *</label>
                     <p class="field__error" id="err-message"><?= e($errors['message'] ?? '') ?></p>
                 </div>

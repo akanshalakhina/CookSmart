@@ -25,7 +25,7 @@ $siteUrl = rtrim($argv[1] ?? '', '/');
 
 /* ---------- Pages ---------- */
 $products = require $site . '/data/products.php';
-$pages = ['/', '/about-us/', '/products/', '/company-policy/', '/contact-us/'];
+$pages = ['/', '/about-us/', '/products/', '/company-policy/', '/career/', '/contact-us/'];
 foreach (array_keys($products) as $slug) {
     $pages[] = '/products/' . $slug . '/';
 }

@@ -42,8 +42,8 @@ const COMPANY_LEGAL_NAME = 'Cooksmart Premium Food Private Limited';
 const FOUNDED_YEAR       = 2015;
 const LEADER_NAME        = 'Mr Santanu Saha';
 
-const PHONE_DISPLAY  = '+91 98000 87155';
-const PHONE_E164     = '+919800087155';
+const PHONE_DISPLAY  = '+91 70036 94825';
+const PHONE_E164     = '+917003694825';
 const CONTACT_EMAIL  = 'cooksmartkol@gmail.com';
 
 // Where enquiry-form submissions are emailed.

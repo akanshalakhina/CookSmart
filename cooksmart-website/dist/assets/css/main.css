@@ -241,6 +241,15 @@ ul, ol { margin: 0; padding: 0; }
   content: ""; position: absolute; left: 50%; top: -2px; width: 5px; height: 5px; border-radius: 50%;
   background: var(--cs-red); transform: translate(-50%, 6px) scale(0); opacity: 0; transition: .35s var(--ease-out);
 }
+/* Six links + Shop Now: keep them on one line, tighter between 1024 and 1279px */
+.nav-link { white-space: nowrap; }
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  .main-nav ul { gap: 14px; }
+  .main-nav--left ul { padding-right: 18px; }
+  .main-nav--right ul { padding-left: 18px; }
+  .nav-link { font-size: .9rem; }
+  .main-nav--right .btn-shop { --btn-pad: 9px 15px; font-size: .9rem; }
+}
 .nav-link:hover, .nav-link.is-active { color: var(--cs-red-strong); }
 .nav-link:hover::after, .nav-link.is-active::after { transform: scaleX(1); }
 .nav-link.is-active::before { transform: translate(-50%, 0) scale(1); opacity: 1; }
@@ -523,6 +532,8 @@ html.curtain-in .curtain__panel { transform: translateY(0); }
 html.js.is-entering .curtain__panel { transform: translateY(0); transition: none; }
 html.js.is-entering.curtain-out .curtain__panel { transform: translateY(-101%); transition: transform .65s var(--ease-in-out); }
 html.js.is-entering.curtain-out .curtain__panel--green { transition-delay: .09s; }
+/* Putting the panels back below the screen must be instant, never a slide down across the page. */
+html.curtain-reset .curtain__panel { transition: none !important; }
 
 
 /* ---------- Inner page hero ---------- */
@@ -612,8 +623,10 @@ html.js.is-entering.curtain-out .curtain__panel--green { transition-delay: .09s;
 .product-card__range { margin: 0; font-size: .82rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); filter: brightness(.82); }
 .product-card__name { font-size: 1.45rem; margin: 2px 0 0; }
 .product-card__hi { margin: 0 0 12px; color: var(--cs-muted); font-size: 1rem; }
-.product-card__meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; }
+.product-card__meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 6px; margin-top: auto; }
 .product-card__meta .chip { background: var(--accent-soft); color: var(--cs-ink); }
+.product-card__meta .chip--price { background: var(--cs-red-strong); color: #fff; box-shadow: 0 6px 12px -6px rgba(195, 22, 26, .8); }
+.product-card__meta .product-card__more { margin-left: auto; }
 .product-card__more { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: .92rem; color: var(--cs-red-strong); }
 .product-card__more .icon { width: 16px; height: 16px; transition: transform .35s var(--ease-out); }
 .product-card:hover .product-card__more .icon { transform: translateX(5px); }

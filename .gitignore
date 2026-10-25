@@ -10,3 +10,8 @@ Thumbs.db
 
 .vercel
 .env*
+
+# Runtime data created by the owner area (never commit: contains the admin password hash)
+cooksmart-website/storage/jobs.json
+cooksmart-website/storage/admin.json
+cooksmart-website/storage/login-attempts.json

@@ -132,7 +132,7 @@ require __DIR__ . '/includes/header.php';
                     <span class="hero-atta__disc"></span>
                     <span class="hero-atta__ring"></span>
                     <img src="<?= e(product_img($atta)) ?>" alt="" class="hero-atta__pack" width="320" height="480" data-hero-pack>
-                    <span class="hero-atta__tag hero-atta__tag--1" data-hero-pack><?= icon('package') ?>5 kg pack</span>
+                    <span class="hero-atta__tag hero-atta__tag--1" data-hero-pack><?= icon('package') ?><?= e(pack_summary($atta)) ?> packs</span>
                     <span class="hero-atta__tag hero-atta__tag--2" data-hero-pack><?= icon('leaf') ?>Natural Whole Wheat</span>
                     <span class="hero-atta__tag hero-atta__tag--3" data-hero-pack><?= icon('shield') ?>Hygienically Packed</span>
                 </div>

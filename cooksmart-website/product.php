@@ -19,7 +19,7 @@ $fullName = ($product['range'] === 'Sugrihini' ? 'Sugrihini ' : 'CookSmart ') . 
 $page = [
     'slug'        => 'products',
     'path'        => 'products/' . $product['slug'] . '/',
-    'title'       => $fullName . ' — ' . implode(', ', $product['net_weights']),
+    'title'       => $fullName . ' — ' . pack_summary($product),
     'description' => $product['description'],
     'body_class'  => 'product-page',
     'breadcrumbs' => [
@@ -35,8 +35,15 @@ enqueue_script('js/carousel.js');
 // same-category products first, then the rest of the range
 $others = array_filter(products(), static fn ($p) => $p['slug'] !== $product['slug']);
 uasort($others, static fn ($a, $b) => ($b['category'] === $product['category']) <=> ($a['category'] === $product['category']));
-$views  = array_keys($product['images']);
-$viewLabels = ['small' => 'smaller pack'];
+
+// pack sizes drawn side by side, biggest first; the first one starts selected
+$packs   = $product['packs'];
+$multi   = count($packs) > 1;
+$lineSum = 0.0;
+foreach ($packs as $pk) {
+    $lineSum += $pk['scale'] * pack_aspect($product, $pk['id']);
+}
+$lineSum = round($lineSum * 0.88, 3); // packs overlap slightly, so they need a little less width
 
 require __DIR__ . '/includes/header.php';
 ?>
@@ -54,20 +61,31 @@ require __DIR__ . '/includes/header.php';
             <div class="product-gallery__stage" data-anim="zoom-in" data-tilt-stage>
                 <span class="product-gallery__blob" aria-hidden="true"></span>
                 <span class="product-gallery__ring" aria-hidden="true"></span>
-                <?php foreach ($views as $i => $view): ?>
-                <img src="<?= e(product_img($product, $view)) ?>" alt="<?= e($fullName . ($i ? ' — ' . ($viewLabels[$view] ?? 'alternate view') : ' pack, ' . $product['net_weights'][0])) ?>"
-                     class="product-gallery__img<?= $i === 0 ? ' is-active' : '' ?>" width="600" height="900" data-gallery-img="<?= $i ?>"<?= $i ? ' loading="lazy"' : ' fetchpriority="high"' ?>>
-                <?php endforeach; ?>
+                <div class="pack-lineup" data-lineup data-view="front" style="--sum: <?= e((string) $lineSum) ?>;">
+                    <?php foreach ($packs as $i => $pk): ?>
+                    <button type="button" class="pack-lineup__item<?= $i === 0 ? ' is-selected' : '' ?>" data-pack="<?= e($pk['id']) ?>" data-label="<?= e($pk['label']) ?>"
+                            data-thumb-front="<?= e(pack_img($product, $pk['id'], 'front', 'sm')) ?>" data-thumb-back="<?= e(pack_img($product, $pk['id'], 'back', 'sm')) ?>"
+                            style="--s: <?= e((string) $pk['scale']) ?>; --ar: <?= e((string) pack_aspect($product, $pk['id'])) ?>; --z: <?= count($packs) - $i ?>;"
+                            aria-pressed="<?= $i === 0 ? 'true' : 'false' ?>" aria-label="Show the <?= e($pk['label']) ?> pack">
+                        <span class="pack-lineup__frame">
+                            <img src="<?= e(pack_img($product, $pk['id'], 'front')) ?>" alt="<?= e($fullName . ' pack, ' . $pk['label']) ?>"
+                                 class="pack-lineup__img pack-lineup__img--front" width="600" height="900"<?= $i === 0 ? ' fetchpriority="high"' : '' ?>>
+                            <img src="<?= e(pack_img($product, $pk['id'], 'back')) ?>" alt="<?= e($fullName . ' pack, ' . $pk['label'] . ' — back') ?>"
+                                 class="pack-lineup__img pack-lineup__img--back" width="600" height="900" loading="lazy">
+                        </span>
+                        <span class="pack-lineup__tag"><?= e($pk['label']) ?></span>
+                    </button>
+                    <?php endforeach; ?>
+                </div>
             </div>
-            <?php if (count($views) > 1): ?>
             <div class="product-gallery__thumbs" role="group" aria-label="Pack views">
-                <?php foreach ($views as $i => $view): ?>
-                <button type="button" class="product-gallery__thumb<?= $i === 0 ? ' is-active' : '' ?>" data-gallery-thumb="<?= $i ?>" aria-label="<?= e(isset($viewLabels[$view]) ? 'Show ' . $viewLabels[$view] : 'Show view ' . ($i + 1)) ?>" aria-pressed="<?= $i === 0 ? 'true' : 'false' ?>">
-                    <img src="<?= e(product_img($product, $view, 'sm')) ?>" alt="" width="70" height="105" loading="lazy">
+                <?php foreach (['front' => 'Front', 'back' => 'Back'] as $view => $viewLabel): ?>
+                <button type="button" class="product-gallery__thumb<?= $view === 'front' ? ' is-active' : '' ?>" data-view-btn="<?= e($view) ?>" aria-pressed="<?= $view === 'front' ? 'true' : 'false' ?>" aria-label="Show the <?= e(strtolower($viewLabel)) ?> of the pack">
+                    <img src="<?= e(pack_img($product, $packs[0]['id'], $view, 'sm')) ?>" alt="" width="70" height="105" loading="lazy" data-view-thumb="<?= e($view) ?>">
+                    <span class="product-gallery__thumb-label"><?= e($viewLabel) ?></span>
                 </button>
                 <?php endforeach; ?>
             </div>
-            <?php endif; ?>
         </div>
 
         <div class="product-info">
@@ -78,12 +96,26 @@ require __DIR__ . '/includes/header.php';
             <p class="product-info__hi" lang="<?= e($product['name_lang']) ?>" data-anim="fade-up"><?= e($product['name_local']) ?></p>
             <?= swoosh_line() ?>
             <p class="product-info__desc" data-anim="fade-up" data-delay="0.1"><?= e($product['description']) ?></p>
+            <?php if (!empty($product['price_pack'])): ?>
+            <p class="rs5-callout" data-anim="fade-up" data-delay="0.12">
+                <span class="rs5-callout__label">Available at</span>
+                <span class="rs5-tag"><?= e(rupees($product['price_pack'])) ?></span>
+                <span class="rs5-callout__text">Pocket-friendly pack</span>
+            </p>
+            <?php endif; ?>
 
             <div class="product-info__block" data-anim="fade-up" data-delay="0.15">
-                <h3 class="product-info__label">Net weight</h3>
-                <div class="product-info__weights">
-                    <?php foreach ($product['net_weights'] as $w): ?><span class="weight-chip"><?= icon('package') ?><?= e($w) ?></span><?php endforeach; ?>
+                <h3 class="product-info__label" id="pack-label"><?= $multi ? 'Choose pack size' : 'Net weight' ?></h3>
+                <div class="pack-picker" role="radiogroup" aria-labelledby="pack-label" data-pack-picker>
+                    <?php foreach ($packs as $i => $pk): ?>
+                    <button type="button" role="radio" class="pack-option<?= $i === 0 ? ' is-active' : '' ?>" data-pack="<?= e($pk['id']) ?>" aria-checked="<?= $i === 0 ? 'true' : 'false' ?>" tabindex="<?= $i === 0 ? '0' : '-1' ?>">
+                        <?= icon('package') ?><span><?= e($pk['label']) ?></span>
+                    </button>
+                    <?php endforeach; ?>
                 </div>
+                <?php if ($multi): ?>
+                <p class="pack-picker__note" data-pack-note aria-live="polite">Showing the <strong><?= e($packs[0]['label']) ?></strong> pack — the other size is greyed out.</p>
+                <?php endif; ?>
             </div>
 
             <div class="product-info__block">
