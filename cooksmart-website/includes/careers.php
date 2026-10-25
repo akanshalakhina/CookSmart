@@ -168,13 +168,36 @@ function admin_is_configured(): bool
     return admin_hash() !== '';
 }
 
-function admin_set_password(string $password): bool
+/** Login ID of the owner account ('' when none was set: then the password alone is enough). */
+function admin_user(): string
+{
+    $data = is_file(ADMIN_FILE) ? json_decode((string) file_get_contents(ADMIN_FILE), true) : null;
+    return is_array($data) ? (string) ($data['user'] ?? '') : '';
+}
+
+function admin_valid_user(string $user): bool
+{
+    return (bool) preg_match('/^[A-Za-z0-9._@-]{3,40}$/', $user);
+}
+
+/** Save the owner's password (and Login ID; the existing ID is kept when $user is null). */
+function admin_set_password(string $password, ?string $user = null): bool
 {
     $dir = dirname(ADMIN_FILE);
     if (!is_dir($dir)) {
         mkdir($dir, 0750, true);
     }
-    return file_put_contents(ADMIN_FILE, json_encode(['hash' => password_hash($password, PASSWORD_DEFAULT), 'updated' => date('c')]), LOCK_EX) !== false;
+    $user ??= admin_user();
+    return file_put_contents(ADMIN_FILE, json_encode(['user' => $user, 'hash' => password_hash($password, PASSWORD_DEFAULT), 'updated' => date('c')]), LOCK_EX) !== false;
+}
+
+/** Login ID (if one is set) and password must both match. The password is always checked, so timing does not reveal a wrong ID. */
+function admin_check_login(string $user, string $password): bool
+{
+    $passwordOk = password_verify($password, admin_hash());
+    $id = admin_user();
+    $userOk = $id === '' || hash_equals(strtolower($id), strtolower(trim($user)));
+    return $passwordOk && $userOk;
 }
 
 function admin_logged_in(): bool

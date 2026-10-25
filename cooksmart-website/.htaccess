@@ -9,8 +9,8 @@ ErrorDocument 404 /404.php
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Block private folders (dist/ is only the Vercel design preview)
-    RewriteRule ^(includes|data|storage|dist)(/|$) - [F,L]
+    # Block private folders (dist/ and preview/ are only for the Vercel design preview)
+    RewriteRule ^(includes|data|storage|dist|preview)(/|$) - [F,L]
     RewriteRule ^build-static\.php$ - [F,L]
 
     # Redirect old-style .php URLs to clean URLs (SEO)

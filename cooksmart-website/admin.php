@@ -41,11 +41,14 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
     $password = (string) ($_POST['password'] ?? '');
 
     if ($action === 'setup' && !admin_is_configured()) {
-        if (strlen($password) < 8) {
+        $newUser = trim((string) ($_POST['username'] ?? ''));
+        if (!admin_valid_user($newUser)) {
+            flash('Please choose a Login ID of 3 to 40 characters (letters, digits and . _ - @).', 'error');
+        } elseif (strlen($password) < 8) {
             flash('Please choose a password of at least 8 characters.', 'error');
         } elseif ($password !== (string) ($_POST['password2'] ?? '')) {
             flash('The two passwords do not match.', 'error');
-        } elseif (!admin_set_password($password)) {
+        } elseif (!admin_set_password($password, $newUser)) {
             flash('Could not save the password. Please check that the storage/ folder is writable.', 'error');
         } else {
             session_regenerate_id(true);
@@ -58,13 +61,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
     if ($action === 'login') {
         if (login_locked()) {
             flash('Too many wrong attempts. Please wait 15 minutes and try again.', 'error');
-        } elseif (admin_is_configured() && password_verify($password, admin_hash())) {
+        } elseif (admin_is_configured() && admin_check_login((string) ($_POST['username'] ?? ''), $password)) {
             session_regenerate_id(true);
             $_SESSION['cs_admin'] = admin_hash();
             login_clear_failures();
         } else {
             login_record_failure();
-            flash('That password is not correct.', 'error');
+            flash(admin_user() !== '' ? 'That Login ID or password is not correct.' : 'That password is not correct.', 'error');
         }
         back_to();
     }
@@ -197,11 +200,12 @@ require __DIR__ . '/includes/header.php';
         <?php if ($view === 'setup'): ?>
         <div class="admin-card admin-card--narrow">
             <span class="admin-card__icon"><?= icon('lock') ?></span>
-            <h2>Create your password</h2>
-            <p>This is the first time the owner area is opened. Choose a password — you will use it to sign in and post job openings. Do this now, before sharing the website link.</p>
+            <h2>Create your login</h2>
+            <p>This is the first time the owner area is opened. Choose a Login ID and a password — you will use them to sign in and post job openings. Do this now, before sharing the website link.</p>
             <form method="post" action="<?= e(url('admin/')) ?>" novalidate>
                 <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
                 <input type="hidden" name="action" value="setup">
+                <div class="field"><input type="text" id="a-user" name="username" placeholder=" " required minlength="3" maxlength="40" autocomplete="username" autocapitalize="none" spellcheck="false"><label for="a-user">Login ID (e.g. cooksmart-owner)</label></div>
                 <div class="field"><input type="password" id="a-pass" name="password" placeholder=" " required minlength="8" autocomplete="new-password"><label for="a-pass">New password (8+ characters)</label></div>
                 <div class="field"><input type="password" id="a-pass2" name="password2" placeholder=" " required minlength="8" autocomplete="new-password"><label for="a-pass2">Repeat the password</label></div>
                 <button class="btn btn--primary btn--block magnetic" type="submit"><span>Create password</span><?= icon('arrow-right') ?></button>
@@ -215,7 +219,10 @@ require __DIR__ . '/includes/header.php';
             <form method="post" action="<?= e(url('admin/')) ?>" novalidate>
                 <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
                 <input type="hidden" name="action" value="login">
-                <div class="field"><input type="password" id="a-login" name="password" placeholder=" " required autocomplete="current-password" autofocus><label for="a-login">Password</label></div>
+                <?php if (admin_user() !== ''): ?>
+                <div class="field"><input type="text" id="a-id" name="username" placeholder=" " required autocomplete="username" autocapitalize="none" spellcheck="false" autofocus><label for="a-id">Login ID</label></div>
+                <?php endif; ?>
+                <div class="field"><input type="password" id="a-login" name="password" placeholder=" " required autocomplete="current-password"<?= admin_user() === '' ? ' autofocus' : '' ?>><label for="a-login">Password</label></div>
                 <button class="btn btn--primary btn--block magnetic" type="submit"><span>Sign in</span><?= icon('arrow-right') ?></button>
             </form>
         </div>

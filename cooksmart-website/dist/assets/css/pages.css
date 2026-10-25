@@ -148,7 +148,8 @@ html.js:not(.hero-ready) .hero [data-hero-pack] { opacity: 0; }
   .hero-slide { min-height: 0; padding: 40px 0 170px; align-items: flex-start; }
   .hero-slide__inner { grid-template-columns: 1fr; gap: 24px; }
   .hero-slide__text { text-align: left; }
-  .hero-stage { height: 330px; max-width: 520px; width: 100%; justify-self: center; }
+  /* the pack area scales with its width (a fixed height let the tall packs poke out above it and cover the buttons) */
+  .hero-stage { height: auto; aspect-ratio: 1 / .9; max-width: 520px; width: 100%; justify-self: center; }
   .hero-plate__img { width: min(400px, 88vw); }
   .hero-atta { height: 360px; }
   .hero__controls { bottom: 86px; }
@@ -624,8 +625,6 @@ html:not(.js) .filter-bar { display: none; }
 .pack-option .icon { width: 22px; height: 22px; color: color-mix(in srgb, var(--accent) 80%, #000); }
 .pack-option:hover { border-color: var(--accent); transform: translateY(-3px); }
 .pack-option.is-active { background: var(--accent-soft); border-color: var(--accent); box-shadow: 0 12px 22px -14px var(--accent); }
-.pack-picker__note { margin: 12px 0 0; font-size: .95rem; color: var(--cs-muted); }
-.pack-picker__note strong { color: var(--cs-ink); }
 
 /* "Available at ₹5" — deliberately loud so it stands out in the description */
 .rs5-callout {

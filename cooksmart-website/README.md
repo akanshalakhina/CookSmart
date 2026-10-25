@@ -35,8 +35,10 @@ Also update `robots.txt` with the real sitemap URL.
   Every product has a `packs` list (for example Haldi Powder: 100 g and 50 g; Chakki Fresh Atta: 5 kg and 1 kg). On the product page the
   pack you pick stays in colour and the other sizes turn grey, and a Front / Back switch shows the back of the pack. Each pack needs four images in
   `assets/images/products/`: `{slug}-{pack}-front.webp`, `{slug}-{pack}-front-sm.webp`, `{slug}-{pack}-back.webp`, `{slug}-{pack}-back-sm.webp`
-  (900 px and 420 px tall). The **back** images are designed stand-ins (brand header, net weight, company address, customer care number) —
-  replace them with the real back-of-pack artwork when you have it (it must also carry FSSAI number, MRP, batch details and ingredients).
+  (900 px and 420 px tall). The front and back images are built from the printer's flat artwork (centre panel = front; the two side panels =
+  back), so they carry the real FSSAI number, barcode, QR code and nutrition table. **Whole Yellow Mustard** has no printer artwork yet — its
+  images are still the earlier stand-ins; send its flat artwork and rebuild. Spelling slips in the print files ("Protin", "Corporate O ice")
+  are corrected on the website images only.
   `price_pack` (₹5) switches on the highlighted **"Available at ₹5"** line in the description; leave it `null` for products without that pack.
 - **Product categories** (Ground Spices, Whole Spices, Atta) → `product_categories()` in `includes/functions.php`. The Products page, footer and enquiry form group products by these.
 - **Company text** (vision, mission, heritage, segments, commitments) → `data/company.php`.
@@ -56,12 +58,27 @@ On localhost the enquiry form **writes to `storage/enquiries.log` instead of sen
 ## 4b. Career page and owner area
 
 - `/career/` lists the job openings; each one has an **Apply Now** button (opens the contact form with the job filled in) and a WhatsApp button.
-- `/admin/` is the owner area. **The first time it is opened it asks you to create a password** — do this right after uploading the site,
-  before you share the link. Then sign in to post, edit, close/reopen or delete openings; changes appear on the Career page immediately.
-- Openings are saved in `storage/jobs.json` and the password (hashed) in `storage/admin.json`. `storage/` is blocked from the web and must be
-  **writable** by PHP (on Hostinger this is the default; permissions 755/644). Back these two files up if you move the site.
-- Forgot the password? Delete `storage/admin.json` and open `/admin/` again to create a new one (your job openings are kept).
+- `/admin/` is the owner area (not linked from the site; the owner types the address). Sign in with a **Login ID and password** to post, edit,
+  close/reopen or delete openings; changes appear on the Career page immediately.
+- The login lives in `storage/admin.json` (password stored hashed). It is **not in git on purpose**, so upload `storage/admin.json` together with
+  the site. If that file is missing, the first person to open `/admin/` is asked to create a Login ID and password — so never leave a live site without it.
+- Openings are saved in `storage/jobs.json`. `storage/` is blocked from the web and must be **writable** by PHP (on Hostinger this is the default;
+  permissions 755/644). When you re-upload the site, do not overwrite `storage/admin.json` or `storage/jobs.json`; back them up if you move the site.
+- The owner can change the password from the owner area (**Change password**). Forgot it? Delete `storage/admin.json` and open `/admin/` again to
+  create a new login (your job openings are kept).
+- To demo it on a computer: run `php -S localhost:8000 router.php` in this folder and open http://localhost:8000/admin/.
 - Wrong passwords are limited to 5 tries per 15 minutes. The owner area is excluded from search engines (`robots.txt` + `noindex`).
+
+## 4c. The owner area on the Vercel design preview (demo)
+
+Vercel cannot run PHP, so `/admin/` on the preview link is a **practice copy** (clearly marked *Demo*) built for showing the owner how posting works.
+It lives only in `preview/` and `includes/demo-admin.php` and is added to `dist/` by `php build-static.php`; the live PHP site never serves it.
+
+- Demo login (not the real one): **Login ID `demo` · Password `cooksmart-demo`**. It is only a gate for the demo — anyone can read it in the page source.
+- Jobs posted in the demo are saved in that visitor's own browser (localStorage) and appear on the preview's Career page for that browser only.
+  Nobody else sees them. The real owner area (`admin.php`) saves jobs on the server for everyone.
+- `preview/preview-admin.js` = the demo owner area · `preview/preview-careers.js` = shows the demo jobs on the Career page and fills the contact form
+  from "Apply Now". To change the demo password, put the SHA-256 of the new one in `DEMO_HASH` in `preview/preview-admin.js` and rebuild.
 
 ## 5. Put it on hosting (Apache / cPanel / Hostinger etc.)
 
@@ -121,6 +138,7 @@ cooksmart-website/
 │   company-policy.php, contact-us.php, contact-submit.php, 404.php, sitemap.php
 ├── .htaccess · router.php (dev only) · robots.txt
 ├── includes/   config.php · functions.php · careers.php · header.php · footer.php · partials/
+├── preview/    demo owner area scripts for the Vercel preview only (not used on PHP hosting)
 ├── data/       products.php · company.php
 ├── storage/    jobs.json · admin.json (created by the owner area) · enquiry log in dev — blocked from the web
 └── assets/

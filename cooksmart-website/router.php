@@ -9,7 +9,7 @@ declare(strict_types=1);
 $path = rawurldecode(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/');
 
 // Never serve private folders.
-if (preg_match('#^/(includes|data|storage)(/|$)#', $path)) {
+if (preg_match('#^/(includes|data|storage|preview)(/|$)#', $path)) {
     http_response_code(403);
     exit('Forbidden');
 }
@@ -27,6 +27,7 @@ $routes = [
     '#^/company-policy/?$#'              => 'company-policy.php',
     '#^/career/?$#'                      => 'career.php',
     '#^/admin/?$#'                       => 'admin.php',
+    '#^/__demo/admin/?$#'                => 'includes/demo-admin.php', // static preview only (see build-static.php)
     '#^/contact-us/?$#'                  => 'contact-us.php',
     '#^/contact-submit\.php$#'           => 'contact-submit.php',
     '#^/sitemap\.xml$#'                  => 'sitemap.php',

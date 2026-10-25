@@ -113,9 +113,6 @@ require __DIR__ . '/includes/header.php';
                     </button>
                     <?php endforeach; ?>
                 </div>
-                <?php if ($multi): ?>
-                <p class="pack-picker__note" data-pack-note aria-live="polite">Showing the <strong><?= e($packs[0]['label']) ?></strong> pack — the other size is greyed out.</p>
-                <?php endif; ?>
             </div>
 
             <div class="product-info__block">

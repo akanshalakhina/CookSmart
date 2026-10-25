@@ -84,7 +84,10 @@
     var y = window.scrollY;
     var menuOpen = document.body.classList.contains('menu-open');
     if (header) {
-      header.classList.toggle('is-scrolled', y > 20);
+      // two thresholds (enter at 40px, leave at 8px) so the header cannot flip back and forth near one scroll position
+      var scrolled = header.classList.contains('is-scrolled');
+      if (!scrolled && y > 40) header.classList.add('is-scrolled');
+      else if (scrolled && y < 8) header.classList.remove('is-scrolled');
       header.classList.remove('is-hidden');
     }
     if (toTop) {

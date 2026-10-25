@@ -215,9 +215,12 @@ ul, ol { margin: 0; padding: 0; }
   height: var(--header-h);
   background: rgba(255, 255, 255, .98);
   box-shadow: 0 8px 24px -16px rgba(74, 7, 10, .35);
-  transition: transform .45s var(--ease-out), height .35s var(--ease-out), background-color .3s;
+  -webkit-backdrop-filter: saturate(1.6) blur(14px); backdrop-filter: saturate(1.6) blur(14px);
+  transition: transform .45s var(--ease-out), background-color .3s;
 }
-.site-header.is-scrolled { --header-h: 70px; background: rgba(255, 255, 255, .95); backdrop-filter: saturate(1.6) blur(14px); }
+/* The bar keeps the SAME height when scrolled: shrinking it moved the page under the pointer, which toggled the
+   state again around 20px of scroll and made the header flicker. Only the colour, blur and logo size change. */
+.site-header.is-scrolled { background: rgba(255, 255, 255, .95); }
 .site-header.is-hidden { transform: none; }
 .site-header__inner {
   height: 100%;
@@ -262,7 +265,8 @@ ul, ol { margin: 0; padding: 0; }
   margin-top: -8px;
   padding: 14px 14px 18px;
   text-decoration: none;
-  transition: width .4s var(--ease-out), padding .4s var(--ease-out), margin .4s var(--ease-out);
+  transform-origin: 50% 0;
+  transition: transform .4s var(--ease-out);
 }
 .brand-badge__plate {
   position: absolute; inset: 0 -18px -10px; z-index: -1;
@@ -294,10 +298,7 @@ ul, ol { margin: 0; padding: 0; }
   margin-top: 5px;
   opacity: .95;
 }
-.site-header.is-scrolled .brand-badge { width: clamp(140px, 12vw, 160px); padding: 10px 10px 14px; margin-top: 0; }
-.site-header.is-scrolled .brand-badge__sub { font-size: 0.58rem; letter-spacing: 0.15em; margin-top: 2px; }
-.site-header.is-scrolled .brand-badge__line { width: 80px; height: 2.5px; margin-top: 4px; }
-.site-header.is-scrolled .brand-badge__plate { inset: 0 -16px -8px; }
+.site-header.is-scrolled .brand-badge { transform: translateY(8px) scale(.78); }
 
 .header-cart, .burger { display: none; }
 
@@ -311,10 +312,7 @@ ul, ol { margin: 0; padding: 0; }
   .brand-badge__sub { font-size: 0.58rem; letter-spacing: 0.14em; margin-top: 2px; }
   .brand-badge__line { width: 78px; height: 2.5px; margin-top: 4px; }
   .brand-badge__plate { inset: 0 -14px -8px; }
-  .site-header.is-scrolled .brand-badge { width: 126px; padding: 8px 10px 12px; }
-  .site-header.is-scrolled .brand-badge__sub { font-size: 0.52rem; letter-spacing: 0.12em; }
-  .site-header.is-scrolled .brand-badge__line { width: 68px; height: 2px; margin-top: 3px; }
-  .site-header.is-scrolled .brand-badge__plate { inset: 0 -12px -6px; }
+  .site-header.is-scrolled .brand-badge { transform: scale(.86); }
   .header-cart {
     display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
     background: var(--cs-swoosh); color: #0D3B1A; box-shadow: 0 8px 18px -8px rgba(49, 152, 71, .8);

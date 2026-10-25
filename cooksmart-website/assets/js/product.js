@@ -13,7 +13,6 @@
   var items = Array.prototype.slice.call(gallery.querySelectorAll('.pack-lineup__item'));
   var viewBtns = Array.prototype.slice.call(gallery.querySelectorAll('[data-view-btn]'));
   var options = Array.prototype.slice.call(document.querySelectorAll('[data-pack-picker] .pack-option'));
-  var note = document.querySelector('[data-pack-note]');
   var current = items.length ? items[0].dataset.pack : '';
 
   function itemFor(id) {
@@ -42,10 +41,6 @@
       var src = item.dataset[b.dataset.viewBtn === 'back' ? 'thumbBack' : 'thumbFront'];
       if (img && src) img.src = src;
     });
-    if (note) {
-      note.innerHTML = 'Showing the <strong></strong> pack — the other size is greyed out.';
-      note.querySelector('strong').textContent = item.dataset.label;
-    }
     if (opts && opts.focus) {
       var opt = options.filter(function (o) { return o.dataset.pack === id; })[0];
       if (opt) opt.focus();
