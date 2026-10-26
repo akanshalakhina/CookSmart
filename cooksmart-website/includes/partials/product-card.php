@@ -17,7 +17,7 @@ $detailUrl = url('products/' . $product['slug'] . '/');
             <p class="product-card__hi" lang="<?= e($product['name_lang']) ?>"><?= e($product['name_local']) ?></p>
             <div class="product-card__meta">
                 <?php foreach (pack_labels($product) as $w): ?><span class="chip"><?= e($w) ?></span><?php endforeach; ?>
-                <?php if (!empty($product['price_pack'])): ?><span class="chip chip--price" title="Available at <?= e(rupees($product['price_pack'])) ?>"><?= e(rupees($product['price_pack'])) ?></span><?php endif; ?>
+                <?php if (!empty($product['price_pack'])): ?><span class="chip chip--price" title="Also available in <?= e(rupees($product['price_pack'])) ?> packet">Also <?= e(rupees($product['price_pack'])) ?> packet</span><?php endif; ?>
                 <span class="product-card__more">View details <?= icon('arrow-right') ?></span>
             </div>
         </div>

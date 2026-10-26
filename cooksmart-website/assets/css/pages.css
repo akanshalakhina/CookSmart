@@ -626,11 +626,12 @@ html:not(.js) .filter-bar { display: none; }
 .pack-option:hover { border-color: var(--accent); transform: translateY(-3px); }
 .pack-option.is-active { background: var(--accent-soft); border-color: var(--accent); box-shadow: 0 12px 22px -14px var(--accent); }
 
-/* "Available at ₹5" — deliberately loud so it stands out in the description */
+/* "Also available in ₹5 packet" — prominent badge, shown just below the pack size */
+.product-info__block .rs5-callout { margin-top: 18px; }
 .rs5-callout {
   position: relative; isolation: isolate; overflow: hidden;
-  display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px 14px;
-  margin: 4px 0 0; padding: 9px 24px 9px 22px; border-radius: 999px;
+  display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px 12px;
+  margin: 4px 0 0; padding: 8px 22px 8px 20px; border-radius: 999px;
   background: var(--cs-red-grad); color: #fff; font-weight: 700;
   box-shadow: 0 16px 28px -16px rgba(195, 22, 26, .85), inset 0 -2px 0 rgba(0, 0, 0, .12);
 }
@@ -639,12 +640,12 @@ html:not(.js) .filter-bar { display: none; }
   background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .5), transparent);
   transform: skewX(-20deg); animation: shine 4.5s var(--ease-in-out) infinite;
 }
-.rs5-callout__label { font-size: 1.1rem; letter-spacing: .02em; }
-.rs5-callout__text { font-size: .9rem; font-weight: 600; color: rgba(255, 255, 255, .85); }
+.rs5-callout__label { font-size: 1.05rem; letter-spacing: .02em; }
+.rs5-callout__text { font-size: 1.05rem; font-weight: 700; color: #fff; letter-spacing: .01em; }
 .rs5-tag {
-  position: relative; display: inline-grid; place-items: center; min-width: 62px; height: 46px; padding: 0 16px;
+  position: relative; display: inline-grid; place-items: center; min-width: 58px; height: 44px; padding: 0 14px;
   border-radius: 999px; background: #FFD21F; color: #B1060D;
-  font-family: var(--font-display); font-variation-settings: "SOFT" 100; font-weight: 900; font-size: 1.85rem; line-height: 1;
+  font-family: var(--font-display); font-variation-settings: "SOFT" 100; font-weight: 900; font-size: 1.75rem; line-height: 1;
   box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .14), 0 0 0 3px rgba(255, 255, 255, .4);
   animation: rs5-pulse 2.2s ease-in-out infinite;
 }
@@ -652,7 +653,12 @@ html:not(.js) .filter-bar { display: none; }
   0%, 100% { transform: scale(1) rotate(-2deg); box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .14), 0 0 0 3px rgba(255, 255, 255, .4), 0 0 0 0 rgba(255, 210, 31, .65); }
   50% { transform: scale(1.1) rotate(2deg); box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .14), 0 0 0 3px rgba(255, 255, 255, .4), 0 0 0 12px rgba(255, 210, 31, 0); }
 }
-@media (max-width: 479.98px) { .rs5-callout__text { display: none; } }
+@media (max-width: 479.98px) {
+  .rs5-callout { padding: 7px 16px; gap: 6px 10px; }
+  .rs5-callout__label { font-size: .92rem; }
+  .rs5-callout__text { font-size: .92rem; }
+  .rs5-tag { min-width: 50px; height: 38px; font-size: 1.5rem; padding: 0 10px; }
+}
 .claim-list { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
 .claim {
   display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px;

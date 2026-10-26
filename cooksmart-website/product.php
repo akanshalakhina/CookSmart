@@ -96,13 +96,6 @@ require __DIR__ . '/includes/header.php';
             <p class="product-info__hi" lang="<?= e($product['name_lang']) ?>" data-anim="fade-up"><?= e($product['name_local']) ?></p>
             <?= swoosh_line() ?>
             <p class="product-info__desc" data-anim="fade-up" data-delay="0.1"><?= e($product['description']) ?></p>
-            <?php if (!empty($product['price_pack'])): ?>
-            <p class="rs5-callout" data-anim="fade-up" data-delay="0.12">
-                <span class="rs5-callout__label">Available at</span>
-                <span class="rs5-tag"><?= e(rupees($product['price_pack'])) ?></span>
-                <span class="rs5-callout__text">Pocket-friendly pack</span>
-            </p>
-            <?php endif; ?>
 
             <div class="product-info__block" data-anim="fade-up" data-delay="0.15">
                 <h3 class="product-info__label" id="pack-label"><?= $multi ? 'Choose pack size' : 'Net weight' ?></h3>
@@ -113,6 +106,14 @@ require __DIR__ . '/includes/header.php';
                     </button>
                     <?php endforeach; ?>
                 </div>
+                <?php if (!empty($product['price_pack'])): ?>
+                <?php /* the small pack is an extra pack, not the price of the one above: say "Also available in" and put it after the pack size */ ?>
+                <p class="rs5-callout">
+                    <span class="rs5-callout__label">Also available in</span>
+                    <span class="rs5-tag"><?= e(rupees($product['price_pack'])) ?></span>
+                    <span class="rs5-callout__text">packet</span>
+                </p>
+                <?php endif; ?>
             </div>
 
             <div class="product-info__block">

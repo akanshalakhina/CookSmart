@@ -39,7 +39,7 @@ Also update `robots.txt` with the real sitemap URL.
   back), so they carry the real FSSAI number, barcode, QR code and nutrition table. **Whole Yellow Mustard** has no printer artwork yet — its
   images are still the earlier stand-ins; send its flat artwork and rebuild. Spelling slips in the print files ("Protin", "Corporate O ice")
   are corrected on the website images only.
-  `price_pack` (₹5) switches on the highlighted **"Available at ₹5"** line in the description; leave it `null` for products without that pack.
+  `price_pack` (₹5) switches on the highlighted **"Also available in ₹5 packet"** line (just below the pack size, and as a chip on the product cards); leave it `null` for products without that pack.
 - **Product categories** (Ground Spices, Whole Spices, Atta) → `product_categories()` in `includes/functions.php`. The Products page, footer and enquiry form group products by these.
 - **Company text** (vision, mission, heritage, segments, commitments) → `data/company.php`.
 - **Contact details & addresses** → `includes/config.php`.

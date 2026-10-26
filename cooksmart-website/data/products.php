@@ -10,7 +10,7 @@
  *   {slug}-{id}-front.webp  {slug}-{id}-front-sm.webp  {slug}-{id}-back.webp  {slug}-{id}-back-sm.webp
  * `scale` is the pack's height relative to the biggest pack, used to draw the sizes side by side.
  * `price_pack` is set when the product is also sold as a small pack at that rupee price
- * ("Available at ₹5" is highlighted in the product description); it has no image of its own.
+ * ("Also available in ₹5 packet" is highlighted in the product description); it has no image of its own.
  * `category` must be a key of product_categories() in includes/functions.php.
  * `name_local` is the second-language name printed on the pack and `name_lang`
  * its language code (Hindi on the powders and atta, Bengali on whole spices).
