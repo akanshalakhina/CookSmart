@@ -36,8 +36,8 @@ Also update `robots.txt` with the real sitemap URL.
   pack you pick stays in colour and the other sizes turn grey, and a Front / Back switch shows the back of the pack. Each pack needs four images in
   `assets/images/products/`: `{slug}-{pack}-front.webp`, `{slug}-{pack}-front-sm.webp`, `{slug}-{pack}-back.webp`, `{slug}-{pack}-back-sm.webp`
   (900 px and 420 px tall). The front and back images are built from the printer's flat artwork (centre panel = front; the two side panels =
-  back), so they carry the real FSSAI number, barcode, QR code and nutrition table. **Whole Yellow Mustard** has no printer artwork yet — its
-  images are still the earlier stand-ins; send its flat artwork and rebuild. Spelling slips in the print files ("Protin", "Corporate O ice")
+  back), so they carry the real FSSAI number, barcode, QR code and nutrition table. Every product now has its printer artwork, so all
+  fronts and backs are real. Spelling slips in the print files ("Protin", "Corporate O ice")
   are corrected on the website images only.
   `price_pack` (₹5) switches on the highlighted **"Also available in ₹5 packet"** line (just below the pack size, and as a chip on the product cards); leave it `null` for products without that pack.
 - **Product categories** (Ground Spices, Whole Spices, Atta) → `product_categories()` in `includes/functions.php`. The Products page, footer and enquiry form group products by these.
