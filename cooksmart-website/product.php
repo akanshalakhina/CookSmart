@@ -43,7 +43,7 @@ $lineSum = 0.0;
 foreach ($packs as $pk) {
     $lineSum += $pk['scale'] * pack_aspect($product, $pk['id']);
 }
-$lineSum = round($lineSum * 0.88, 3); // packs overlap slightly, so they need a little less width
+$lineSum = round($lineSum * 0.84, 3); // the packs overlap (one stands behind the other), so they need less width
 
 require __DIR__ . '/includes/header.php';
 ?>

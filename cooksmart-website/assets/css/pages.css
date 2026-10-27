@@ -571,13 +571,18 @@ html:not(.js) .filter-bar { display: none; }
 .pack-lineup__item {
   position: relative; z-index: var(--z, 1); flex: none;
   height: calc(var(--s, 1) * var(--H)); aspect-ratio: var(--ar, .67);
-  margin-inline: calc(var(--s, 1) * var(--H) * var(--ar, .67) * -0.055);
+  margin-inline: calc(var(--s, 1) * var(--H) * var(--ar, .67) * -0.17); /* the packs overlap: the selected one stands in front, the other is tucked behind it */
   padding: 0; border: 0; background: none; cursor: pointer; transform-origin: 50% 100%;
   transition: transform .7s var(--ease-out);
 }
-.pack-lineup__item:focus-visible { outline-offset: 6px; border-radius: 12px; }
+.pack-lineup__item:focus-visible { outline: none; }
+/* Keyboard focus: a plain rectangle around the whole image area looked broken on the curved pouch, so the glow follows the pouch shape and the size tag gets a ring. */
+.pack-lineup__item:focus-visible .pack-lineup__img { filter: drop-shadow(0 0 3px #64B741) drop-shadow(0 0 9px rgba(100, 183, 65, .75)) drop-shadow(0 26px 24px rgba(30, 10, 5, .28)); }
+.pack-lineup__item:not(.is-selected):focus-visible .pack-lineup__img { filter: grayscale(1) brightness(1.04) opacity(.85) drop-shadow(0 0 3px #64B741) drop-shadow(0 0 9px rgba(100, 183, 65, .75)); }
+.pack-lineup__item:focus-visible .pack-lineup__tag { box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--cs-green-mid); }
 .pack-lineup__item.is-selected { z-index: 9; transform: translateY(-3%) scale(1.05); }
-.pack-lineup__item:not(.is-selected):hover { transform: translateY(-2%); }
+.pack-lineup__item:not(.is-selected) { transform: scale(.95); }   /* sits a little further back */
+.pack-lineup__item:not(.is-selected):hover { transform: translateY(-2%) scale(.95); }
 .pack-lineup__frame {
   position: absolute; inset: 0; display: block;
   transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
